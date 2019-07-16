@@ -1,0 +1,211 @@
+body {  
+  // font-family: 'Courier New', Courier, monospace;  
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.canvas-ctn{
+  @include media('>sd', '<=ld') {
+    transform: scale(.7);
+    transform-origin: left top;
+  }
+  @include media('<=sd') {
+    width: 100%;
+    // height: calc(100% * 9/16);
+  }
+  @include media('<=tab-mob') {
+    margin-bottom: 40px;
+  }
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
+  position: relative;
+  // border: 1px solid black;
+  // box-shadow: $sh;  
+  // height: $wid;
+  margin: 0 auto;
+  canvas{    
+    transform: scale(.5);
+    transform-origin: left top;
+  }
+  .perc{
+    position: absolute;
+    top: 0;
+    left: -10px;
+    width: 50px;
+    z-index: -1;
+    text-align: right;
+    color: rgba($color: $b, $alpha: .5);
+    font-size: 14px;
+  }
+  .ind{
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 5px;
+    background: rgba($color: $b, $alpha: .6);
+    display: inline-block;
+    color: $w;
+    padding: 5px 10px;
+    transition: all .3s;
+    &:hover{
+      background: rgba($color: $b, $alpha: 1);
+    }
+  }
+  img{
+    &.legend{      
+      height: 70px;
+      @include media('<=tab-mob') {
+        height: 50px;
+      }
+    }
+  }
+  .btn{
+    position: absolute;
+    top: 0;
+    right: -50px;
+    z-index: 1;
+    @include media('<=sd') {
+      right: 0;
+    }
+    @include media('<=tab-mob') {
+      transform: scale(.8);
+      transform-origin: right top;
+    }
+  }
+}
+
+img{  
+  &.icon{
+    vertical-align: top;
+    height: 25px;
+    margin-left: 0px;
+    &.icon-light{
+      vertical-align: middle;
+      margin-right: -7px;
+      margin-left: 5px;      
+      filter: invert(100%);
+    }
+  }
+}
+
+.key{
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  // font-weight: bold;
+  // font-size: 18px;
+  transition: all .3s;
+  &:hover{
+    background: rgba($color: $b, $alpha: .1);
+  }
+  &:focus{
+    outline: none;
+  }
+}
+
+.outer{
+  width: $full;
+  font-weight: bold;
+}
+
+.inner{
+  position: relative;
+  padding: 5px;
+  background: rgba($color: $b, $alpha: .1);
+  &.sec{
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
+    min-width: 20px;
+    // min-width: 65px;
+    color: $w;
+    background: rgba($color: $sc, $alpha: 1);
+    position: relative;
+    &:after{
+      content: " ";
+      background-color: #ccc;
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 10px;
+      height: 100%;
+      cursor: w-resize;
+    }
+    &.result:after{
+      width: 0
+    }
+
+  }
+  .diff{
+    position: absolute;
+    top: -50px;
+    right: -100px;
+    height: 100px;
+    width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: url('../img/bg3.png') no-repeat center;
+    div{
+      background: $w;
+      border: 1px solid $b;
+      padding: 5px;
+      border-radius: 5px;
+    }
+  }
+}
+
+.info-outer{
+  position: absolute;
+  cursor: default;
+}
+
+.bs-popover-bottom .arrow::after{
+  border-bottom-color: #f7f7f7;
+}
+
+.loader-ol{
+  background: $w;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: table;
+  z-index: 3;
+}
+
+.loader-in{
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.loader {
+  border: 5px solid $pr;
+  border-radius: 50%;
+  border-top: 5px solid $w;
+  width: 40px;
+  height: 40px;
+  margin: 0 auto;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

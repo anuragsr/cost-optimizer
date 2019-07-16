@@ -1,0 +1,14 @@
+$pr: #11cccc;
+$sc: #103ace;
+$b: #000;
+$w: #fff;
+
+// $wid: 800px;
+$full: 100%;
+$sh: 0 0 5px 2px rgba($color: $b, $alpha: .1);
+
+$breakpoints: (
+  'tab-mob': 860px,
+  'sd': 1200px,
+  'ld': 1800px
+) !default;

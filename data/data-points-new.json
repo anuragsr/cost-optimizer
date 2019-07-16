@@ -1,0 +1,66 @@
+[
+  {
+    "id": "t1",
+    "key": "Design",
+    "value": 95,
+    "amount": 2100,
+    "dx": 10,
+    "dy": -30
+  },
+  {
+    "id": "t2",
+    "key": "Connectivity",
+    "value": 80,
+    "amount": 500,
+    "dx": 0,
+    "dy": -20
+  },
+  {
+    "id": "t3",
+    "key": "User Experience",
+    "value": 85,
+    "amount": 750,
+    "dx": 0,
+    "dy": -20
+  },
+  {
+    "id": "t4",
+    "key": "Sustainability",
+    "value": 65,
+    "amount": 900,
+    "dx": 0,
+    "dy": -30
+  },
+  {
+    "id": "t5",
+    "key": "Safety",
+    "value": 70,
+    "amount": 600,
+    "dx": -25,
+    "dy": -10
+  },
+  {
+    "id": "t6",
+    "key": "Comfort",
+    "value": 85,
+    "amount": 1900,
+    "dx": -90,
+    "dy": -15
+  },
+  {
+    "id": "t7",
+    "key": "Quality & Reliability",
+    "value": 85,
+    "amount": 2300,
+    "dx": -160,
+    "dy": -20
+  },
+  {
+    "id": "t8",
+    "key": "Total cost of ownership",
+    "value": 70,
+    "amount": 950,
+    "dx": -180,
+    "dy": -20
+  }
+]

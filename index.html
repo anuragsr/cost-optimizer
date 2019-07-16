@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html ng-app="app">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Cost Optimizer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body ng-controller="ctrl" ng-mousemove="doResize($event)" ng-mouseup="finishResize()">
+    <div class="loader-ol h-100 w-100" ng-show="showLoader">
+      <div class="loader-in">
+        <div class="loader"></div>
+      </div>
+    </div>
+
+    <nav class="navbar navbar-dark bg-dark">
+      <a class="navbar-brand" href="#">Visual Cost Optimizer</a>
+    </nav>
+
+    <div class="container-fluid p-4" ng-cloak>
+      <div class="row">
+        <div class="col-xl-6">
+          <h4>Characteristics in the actual <span ng-show="showOptimizer"><br/>and target</span> state</h4><hr class="border-dark">
+          <div class="canvas-ctn">
+            <img class="legend" src="img/legend.png" ng-show="showOptimizer"/>
+          </div>
+          <h6><i>The lowest possible value of a property refers to the respective value of the Minimum Viable Product (MVP).</i></h6>
+          <!-- <h4>Cost changes calculated as follows:</h4><hr class="border-dark">
+          <table class="table table-responsive table-striped">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Vehicle Property</th>
+                <th scope="col">
+                  Savings per vehicle property point [ EUR / vehicle ]
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="n in networkData track by $index">
+                <th scope="row">{{$index + 1}}</th>
+                <td ng-bind-html="n.key | trustedHTML"></td>
+                <td class="font-weight-bold">{{ -1*(networkDataSec[$index].amount - n.amount).toFixed(2) | currency: "" }}</td>
+              </tr>
+              <tr class="font-weight-bold">
+                <th scope="row"></th>
+                <td>Total Savings</td>
+                <td>{{ -1*(newSum - sum).toFixed(2) | currency: "" }}</td>
+              </tr>
+            </tbody>
+          </table> -->
+        </div>
+        <div class="col-xl-6">
+          <h4>Material costs in the actual <span ng-show="showOptimizer"><br/>and target</span> state [ EUR / Unit ]</h4><hr class="border-dark">
+          <div class="row mb-1" ng-repeat="d in networkData track by $index">
+            <div class="col-4">
+              <!-- <div tabindex="0" class="key" title="{{d.key}}" data-toggle="popover" data-id="{{d.id}}" ng-bind-html="d.key | trustedHTML"></div> -->
+              <div tabindex="0" class="key" title="{{d.key}}" data-toggle="popover" data-id="{{d.id}}">
+                {{ d.key }}
+                <img class='icon' src='img/info.svg' />
+              </div>
+            </div>
+            <div class="col-8">
+              <div class="outer">
+                <div class="inner pr" ng-style="{'width': (d.amount*100)/4000 + '%'}">{{ d.amount | currency: "" }}</div>
+                <div ng-mousedown="onPanelDrag($event, $index)" ng-show="showOptimizer" class="inner sec" ng-style="{'width': (networkDataSec[$index].amount*100)/4000 + '%'}">{{ networkDataSec[$index].amount | currency: "" }}</div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4">
+              <div class="key"><b>Sum Total</b></div>
+            </div>
+            <div class="col-8">
+              <div class="outer">
+                <div class="inner" ng-style="{'width': (sum*100)/22000 + '%'}" >{{ sum | currency: "" }}</div>
+                <div ng-show="showOptimizer" class="inner sec result" ng-style="{'width': (newSum*100)/22000 + '%'}">
+                  {{ newSum | currency: ""}}
+                  <div class="diff">
+                    <!-- <div ng-style="{'color' : newSum>sum?'red':'green'}">{{ (((newSum - sum)/sum)*100).toFixed(2) }}%</div> -->
+                    <div ng-style="{'color' : newSum>sum?'red':'green'}">{{ ((newSum - sum)/sum).toFixed(2) }}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr class="border-dark">
+      <div class="row">
+        <div class="col-12 table-responsive">          
+          <table class="table table-striped">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">Product Properties</th>
+                <th scope="col">Property Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Design</td>
+                <td>
+                  Levers for material costs reduction include:
+                  <ul>
+                    <li>Use of unpolished/ unpainted surfaces</li>
+                    <li>Elimination of decorative elements (e.g. moldings, print-ons)</li>
+                    <li>Use of placed-on instead of integrated elements (e.g. use of clip-on solutions instead of moldings)</li>
+                    <li>...</li>
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td>Connectivity</td>
+                <td>
+                  Levers for material costs reduction include:
+                  <ul>
+                    <li>Reduction/elimination of connection types (e.g. USB, Bluetooth, NFC, LTE)</li>
+                    <li>Elimination of prerequisites for software updatability (e.g. Function on Demand, OTA updates)</li>
+                    <li>Use of previous generation communication electronics/ CPUs</li>
+                    <li>...</li>
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td>User Experience</td>
+                <td>
+                  Levers for material costs reduction include:
+                  <ul>
+                    <li>Reduction/elimination of interfaces (e.g. gesture control, speech recognition)</li>
+                    <li>Elimination of compatibility with standardized platforms (e.g. with SAP, Google OS, Siemens S7)</li>
+                    <li>Reduction of customizability (e.g. elimination of variants and adjustability)</li>
+                    <li>...</li>
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td>Sustainability</td>
+                <td>
+                  Levers for material costs reduction include:
+                  <ul>
+                    <li>Elimination of lightweight materials (e.g. use of steel instead of aluminum)</li>
+                    <li>Use of non-recyclable packaging material</li>
+                    <li>Limitation of self-set standards to regulatory requirements (e.g. use of chrome-tanned leathers)</li>
+                    <li>...</li>
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td>Safety</td>
+                <td>
+                  Levers for material costs reduction include:
+                  <ul>
+                    <li>Reduction of torsional strength (e.g. elimination of struts)</li>
+                    <li>Reduction of self-analysis features</li>
+                    <li>Limitation of self-set standards to regulatory requirements (e.g. layers of redundant sensors)</li>
+                    <li>...</li>
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td>Comfort</td>
+                <td>
+                  Levers for material costs reduction include:
+                  <ul>
+                    <li>Reduction of noise, vibration and harshness (NVH) components (e.g. insulation material)</li>
+                    <li>Reduction of convenience features (e.g. remote controllability)</li>
+                    <li>Reduction of usability features (e.g. displays, control elements)</li>
+                    <li>...</li>
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td>Quality & Reliability</td>
+                <td>
+                  Levers for material costs reduction include:
+                  <ul>
+                    <li>Elimination of material finishing (e.g. rust prevention, corrosion resistance)</li>
+                    <li>Reduction of special purpose materials (e.g. use of hard plastics instead of foamed plastics)</li>
+                    <li>Reduction of test requirements/specifications (e.g. lifetime, number of test cycles)</li>
+                    <li>...</li>
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td>Total cost of ownership</td>
+                <td>
+                  Levers for material costs reduction include:
+                  <ul>
+                    <li>Elimination of functions for house repairs (e.g. accessibility of parts via lids)</li>
+                    <li>Reduction of supplied standard equipment (e.g. spare parts, tools, manuals)</li>
+                    <li>Reduction of remote diagnostics features</li>
+                    <li>...</li>
+                  </ul>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <ng-include ng-hide="true" src="'popover.html'"></ng-include>              
+    
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/pixi.min.js"></script>
+    <script src="js/angular.min.js"></script>
+    <script src="js/angular-locale_de-de.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/services.js"></script>
+  </body>
+</html>
