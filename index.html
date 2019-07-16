@@ -89,8 +89,8 @@
         </div>
       </div>
       <hr class="border-dark">
-      <div class="row">
-        <div class="col-12 table-responsive">          
+      <!-- <div class="row">
+        <div class="col-12 table-responsive">
           <table class="table table-striped">
             <thead class="thead-dark">
               <tr>
@@ -196,13 +196,26 @@
                 </td>
               </tr>
             </tbody>
-          </table>
+          </table> 
         </div>
-      </div>
+      </div>-->
     </div>
 
-    <ng-include ng-hide="true" src="'popover.html'"></ng-include>              
+    <ng-include ng-hide="true" src="'popover-new.html'"></ng-include>              
     
+    <div class="popup" 
+      ng-class="{ 'active' : showPopup }"
+      ng-style="{ 
+        'transform' : popupPos === 'right'? 'translateX(0%)' : 'translateX(-100%)'
+      }"
+    >
+      <div ng-bind-html="popupContent | trustedHTML"></div>
+    </div>
+
+    <div class="popup-mobile" ng-class="{ 'active' : showPopup }">
+      <div ng-bind-html="popupContent | trustedHTML"></div>
+    </div>
+
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/pixi.min.js"></script>

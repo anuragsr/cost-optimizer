@@ -209,3 +209,48 @@ img{
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+.popup, .popup-mobile{
+  position: fixed;
+  padding: 25px;
+  background: #fff;
+  box-shadow: 0 0 7px 2px rgba(#000, .2);
+  border-radius: 5px;
+  opacity: 0;
+  z-index: -1;
+  transition: opacity .3s ease-out;
+  &.active{
+    transition: opacity .1s ease-out;
+    opacity: 1;
+    z-index: 1;
+  }
+}
+
+.popup{  
+  top: 70px;
+  left: 50%;
+  width: 400px;  
+  font-size: 1vw;
+  h6{
+    font-size: 1.2vw;
+  }
+  @include media("<=tab-mob"){
+    display: none;
+  }
+}
+
+.popup-mobile{  
+  margin-left: 10px;
+  margin-bottom: 10px;
+  left: 0;
+  bottom: 0;
+  width: 95%;
+  transition: opacity .3s ease-out;
+  font-size: 4vw;
+  h6{
+    font-size: 4.5vw;
+  }
+  @include media(">=tab-mob"){
+    display: none;
+  }
+}

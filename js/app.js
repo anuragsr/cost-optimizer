@@ -1,7 +1,7 @@
 var l = console.log.bind(window.console)
 , app = angular.module('app', [])
 
-app.controller('ctrl', function($scope, pixi){
+app.controller('ctrl', function($scope, $timeout, pixi){
   var BORDER_SIZE = 10  
   , m_pos = 0
   , currPanel
@@ -14,6 +14,9 @@ app.controller('ctrl', function($scope, pixi){
   , s = $scope
 
   s.showOptimizer = true
+  s.showPopup = false
+  s.popupPos = "right"
+  s.popupContent = ""
   s.resize = false
   s.showLoader = true
 
@@ -173,12 +176,26 @@ app.controller('ctrl', function($scope, pixi){
     }
   }
 
+  s.$on('showPopup', function(e, v){
+    // l(e, v)
+    // l(v.id, "Show popup")
+    s.popupContent = $("#" + v.id).html()
+    s.showPopup = true
+    s.$apply()
+  })
+
   s.finishResize = function(){
     s.resize = false
     origWidth = null
+
+    // l("Hide popup")
+    s.showPopup = false
+    $timeout(function(){
+      s.popupPos = "right"    
+    }, 500)
   }
 
-  s.onPanelDrag = function(e, idx){
+  s.onPanelDrag = function(e, idx){    
     s.resize = true
     currPanelIndex = idx
     currPanel = $(e.currentTarget)
@@ -189,6 +206,11 @@ app.controller('ctrl', function($scope, pixi){
     }
     if (origWidth - e.offsetX < BORDER_SIZE) {
       m_pos = e.x
+
+      // l("t" + (idx + 1), "Show popup")
+      s.popupContent = $("#t" + (idx + 1)).html()
+      s.showPopup = true
+      s.popupPos = "left"
     }
   }
 

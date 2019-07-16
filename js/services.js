@@ -297,6 +297,9 @@ app.factory('pixi', function($q, $filter, $rootScope, $http, $q) {
           this.data = e.data
           this.alpha = 0.5
           this.dragging = true
+          
+          $rootScope.$broadcast("showPopup", { id: this.id })
+
           currLine = self.fl('filter', lineArr, { id: this.id })[0]
           if(self.isMobile()){
             // Show Indicator

@@ -227,3 +227,51 @@ img.icon.icon-light {
     transform: rotate(360deg);
   }
 }
+.popup, .popup-mobile {
+  position: fixed;
+  padding: 25px;
+  background: #fff;
+  box-shadow: 0 0 7px 2px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  opacity: 0;
+  z-index: -1;
+  transition: opacity 0.3s ease-out;
+}
+.popup.active, .popup-mobile.active {
+  transition: opacity 0.1s ease-out;
+  opacity: 1;
+  z-index: 1;
+}
+
+.popup {
+  top: 70px;
+  left: 50%;
+  width: 400px;
+  font-size: 1vw;
+}
+.popup h6 {
+  font-size: 1.2vw;
+}
+@media (max-width: 860px) {
+  .popup {
+    display: none;
+  }
+}
+
+.popup-mobile {
+  margin-left: 10px;
+  margin-bottom: 10px;
+  left: 0;
+  bottom: 0;
+  width: 95%;
+  transition: opacity 0.3s ease-out;
+  font-size: 4vw;
+}
+.popup-mobile h6 {
+  font-size: 4.5vw;
+}
+@media (min-width: 860px) {
+  .popup-mobile {
+    display: none;
+  }
+}
