@@ -147,6 +147,8 @@ app.factory('pixi', function($q, $filter, $rootScope, $http, $q) {
         resolution: 2
       })
 
+      // app.renderer.plugins.interaction.autoPreventDefault = false
+      // app.view.style['touch-action'] = 'auto'
       app.view.style.position = "absolute"
       app.view.style.top = app.view.style.left = 0
       canvas.append(app.view)
@@ -278,6 +280,7 @@ app.factory('pixi', function($q, $filter, $rootScope, $http, $q) {
         sq.position.x = obj.x - side/2
         sq.position.y = obj.y - side/2
         sq.id = "nt" + (idx + 1)
+        sq.idx = idx + 1
         sqArr.push(sq)
         ctnCopy.addChild(sq)
         
@@ -291,6 +294,11 @@ app.factory('pixi', function($q, $filter, $rootScope, $http, $q) {
         .on('pointermove', onDragMove)
         
         function onDragStart(e){
+          // l(e.data)
+          // e.data.originalEvent.preventDefault()
+          // e.data.originalEvent.stopPropagation()
+          // app.view.style['touch-action'] = 'none'
+
           // store a reference to the data
           // the reason for this is because of multitouch
           // we want to track the movement of this particular touch
@@ -298,7 +306,7 @@ app.factory('pixi', function($q, $filter, $rootScope, $http, $q) {
           this.alpha = 0.5
           this.dragging = true
           
-          $rootScope.$broadcast("showPopup", { id: this.id })
+          $rootScope.$broadcast("showPopup", { idx: this.idx })
 
           currLine = self.fl('filter', lineArr, { id: this.id })[0]
           if(self.isMobile()){
@@ -323,6 +331,7 @@ app.factory('pixi', function($q, $filter, $rootScope, $http, $q) {
 			    // set the interaction data to null
           this.data = null
           currLine = null
+          $rootScope.$broadcast("hidePopup")          
         }
         
 		    function onDragMove(){

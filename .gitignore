@@ -1,5 +1,6 @@
 /resources
 /versions
+/extra
 serve.bat
 dir.bat
 specs.txt

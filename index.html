@@ -8,7 +8,13 @@
     <link rel="stylesheet" href="css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/style.css" />
   </head>
-  <body ng-controller="ctrl" ng-mousemove="doResize($event)" ng-mouseup="finishResize()">
+  <!-- <body ng-controller="ctrl" ng-mousemove="doResize($event)" ng-mouseup="finishResize()"> -->
+  <body 
+    ng-controller="ctrl"
+    ng-style="{
+      'overflow' : s.overlay ? 'hidden' : 'auto'
+    }"
+  >
     <div class="loader-ol h-100 w-100" ng-show="showLoader">
       <div class="loader-in">
         <div class="loader"></div>
@@ -24,7 +30,12 @@
         <div class="col-xl-6">
           <h4>Characteristics in the actual <span ng-show="showOptimizer"><br/>and target</span> state</h4><hr class="border-dark">
           <div class="canvas-ctn">
+            <div class="canvas-overlay" ng-hide="s.overlay"></div>
             <img class="legend" src="img/legend.png" ng-show="showOptimizer"/>
+            <div class="ctn-btn">
+              <button class="btn btn-info btn-sm" ng-hide="s.overlay" ng-click="s.overlay = true;">Enable Editing</button>
+              <button class="btn btn-success btn-sm" ng-show="s.overlay" ng-click="s.overlay = false;">Done Editing</button>
+            </div>
           </div>
           <h6><i>The lowest possible value of a property refers to the respective value of the Minimum Viable Product (MVP).</i></h6>
           <!-- <h4>Cost changes calculated as follows:</h4><hr class="border-dark">
@@ -53,7 +64,7 @@
           </table> -->
         </div>
         <div class="col-xl-6">
-          <h4>Material costs in the actual <span ng-show="showOptimizer"><br/>and target</span> state [ EUR / Unit ]</h4><hr class="border-dark">
+          <h4>Material costs in the actual <span ng-show="showOptimizer"><br/>and target</span> state [ EUR / Unit ]</h4><hr class="border-dark">          
           <div class="row mb-1" ng-repeat="d in networkData track by $index">
             <div class="col-4">
               <!-- <div tabindex="0" class="key" title="{{d.key}}" data-toggle="popover" data-id="{{d.id}}" ng-bind-html="d.key | trustedHTML"></div> -->
@@ -64,8 +75,13 @@
             </div>
             <div class="col-8">
               <div class="outer">
-                <div class="inner pr" ng-style="{'width': (d.amount*100)/4000 + '%'}">{{ d.amount | currency: "" }}</div>
-                <div ng-mousedown="onPanelDrag($event, $index)" ng-show="showOptimizer" class="inner sec" ng-style="{'width': (networkDataSec[$index].amount*100)/4000 + '%'}">{{ networkDataSec[$index].amount | currency: "" }}</div>
+                <!-- <div class="inner pr" ng-style="{'width': (d.amount*100)/4000 + '%'}">{{ d.amount | currency: "" }}</div>
+                <div ng-mousedown="onPanelDrag($event, $index)" ng-show="showOptimizer" class="inner sec" ng-style="{'width': (networkDataSec[$index].amount*100)/4000 + '%'}">{{ networkDataSec[$index].amount | currency: "" }}</div> -->
+                <div class="inner pr" ng-style="{'width': (d.amount*100)/currDivider + '%'}">{{ d.amount | currency: "" }}</div>
+                <div class="inner sec2" ng-style="{'width': (networkDataSec[$index].amount*100)/currDivider + '%'}">
+                  {{ networkDataSec[$index].amount | currency: "" }}
+                  <div class="handle"></div>
+                </div>
               </div>
             </div>
           </div>
@@ -76,11 +92,11 @@
             <div class="col-8">
               <div class="outer">
                 <div class="inner" ng-style="{'width': (sum*100)/22000 + '%'}" >{{ sum | currency: "" }}</div>
-                <div ng-show="showOptimizer" class="inner sec result" ng-style="{'width': (newSum*100)/22000 + '%'}">
+                <div ng-show="showOptimizer" class="inner sec2 result" ng-style="{'width': (newSum*100)/22000 + '%'}">
                   {{ newSum | currency: ""}}
                   <div class="diff">
-                    <!-- <div ng-style="{'color' : newSum>sum?'red':'green'}">{{ (((newSum - sum)/sum)*100).toFixed(2) }}%</div> -->
-                    <div ng-style="{'color' : newSum>sum?'red':'green'}">{{ ((newSum - sum)/sum).toFixed(2) }}</div>
+                    <div ng-style="{'color' : newSum>sum?'red':'green'}">{{ (((newSum - sum)/sum)*100).toFixed(2) }}%</div>
+                    <!-- <div ng-style="{'color' : newSum>sum?'red':'green'}">{{ ((newSum - sum)/sum).toFixed(2) }}</div> -->
                   </div>
                 </div>
               </div>
@@ -212,11 +228,41 @@
       <div ng-bind-html="popupContent | trustedHTML"></div>
     </div>
 
-    <div class="popup-mobile" ng-class="{ 'active' : showPopup }">
+    <div class="popup-mobile" 
+      ng-class="{ 
+        'active' : showPopup, 
+        'atTop': popupPos === 'top',
+        'atBottom': popupPos === 'bottom' 
+      }"      
+    >
       <div ng-bind-html="popupContent | trustedHTML"></div>
+    </div>
+    
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <!-- <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Welcome</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div> -->
+          <div class="modal-body">
+            <p>Please click the <button class="btn btn-info btn-sm">Enable Editing</button>
+            button to move points on the radar chart.</p>
+            <p>Once done, click the <button class="btn btn-success btn-sm">Done Editing</button> 
+            button to finish.</p>
+            <p><h6><i>Note: Scrolling is disabled while editing.</i></h6></p>
+          </div>
+          <!-- <div class="modal-footer">
+            <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
+          </div> -->
+        </div>
+      </div>
     </div>
 
     <script src="js/jquery-3.3.1.min.js"></script>
+    <!-- <script src="js/jquery.touchSwipe.min.js"></script> -->
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/pixi.min.js"></script>
     <script src="js/angular.min.js"></script>

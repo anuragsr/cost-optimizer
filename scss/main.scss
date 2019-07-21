@@ -27,6 +27,23 @@ body {
   // box-shadow: $sh;  
   // height: $wid;
   margin: 0 auto;
+  .canvas-overlay{  
+    background: rgba(0, 0, 0, 0);
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+    @include media('>=tab-mob') {
+      display: none;
+    }
+  }
+  .ctn-btn{
+    @include media('>=tab-mob') {
+      display: none;
+    }
+  }
   canvas{    
     transform: scale(.5);
     transform-origin: left top;
@@ -61,23 +78,33 @@ body {
     &.legend{      
       height: 70px;
       @include media('<=tab-mob') {
-        height: 50px;
+        height: 40px;
       }
     }
   }
-  .btn{
+  .ctn-btn{
     position: absolute;
     top: 0;
-    right: -50px;
-    z-index: 1;
-    @include media('<=sd') {
-      right: 0;
-    }
+    right: 0px;
+    z-index: 2;
     @include media('<=tab-mob') {
       transform: scale(.8);
       transform-origin: right top;
     }
   }
+  // .btn{
+  //   position: absolute;
+  //   top: 0;
+  //   right: -50px;
+  //   z-index: 1;
+  //   @include media('<=sd') {
+  //     right: 0;
+  //   }
+  //   @include media('<=tab-mob') {
+  //     transform: scale(.8);
+  //     transform-origin: right top;
+  //   }
+  // }
 }
 
 img{  
@@ -117,33 +144,45 @@ img{
 .inner{
   position: relative;
   padding: 5px;
-  background: rgba($color: $b, $alpha: .1);
-  &.sec{
-    -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-    -khtml-user-select: none; /* Konqueror HTML */
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* Internet Explorer/Edge */
-    user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
-    min-width: 20px;
-    // min-width: 65px;
-    color: $w;
-    background: rgba($color: $sc, $alpha: 1);
-    position: relative;
-    &:after{
-      content: " ";
-      background-color: #ccc;
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 10px;
+  background: rgba($b, .1);
+  // &.sec{
+  //   -webkit-touch-callout: none; /* iOS Safari */
+  //   -webkit-user-select: none; /* Safari */
+  //   -khtml-user-select: none; /* Konqueror HTML */
+  //   -moz-user-select: none; /* Firefox */
+  //   -ms-user-select: none; /* Internet Explorer/Edge */
+  //   user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
+  //   min-width: 20px;
+  //   // min-width: 65px;
+  //   color: $w;
+  //   background: rgba($color: $sc, $alpha: 1);
+  //   position: relative;
+  //   &:after{
+  //     content: " ";
+  //     background-color: #ccc;
+  //     position: absolute;
+  //     top: 0;
+  //     right: 0;
+  //     width: 10px;
+  //     height: 100%;
+  //     cursor: w-resize;
+  //   }
+  //   &.result:after{
+  //     width: 0
+  //   }
+  // }
+  &.sec2{
+    background: rgba($sc, 1);    
+    color: #fff;
+    .handle{
+      cursor: e-resize;
       height: 100%;
-      cursor: w-resize;
+      width: 10px;
+      position:absolute;
+      top:0;
+      right:0;
+      background: #ccc;
     }
-    &.result:after{
-      width: 0
-    }
-
   }
   .diff{
     position: absolute;
@@ -212,7 +251,6 @@ img{
 
 .popup, .popup-mobile{
   position: fixed;
-  padding: 25px;
   background: #fff;
   box-shadow: 0 0 7px 2px rgba(#000, .2);
   border-radius: 5px;
@@ -222,7 +260,7 @@ img{
   &.active{
     transition: opacity .1s ease-out;
     opacity: 1;
-    z-index: 1;
+    z-index: 3;
   }
 }
 
@@ -231,6 +269,7 @@ img{
   left: 50%;
   width: 400px;  
   font-size: 1vw;
+  padding: 25px;
   h6{
     font-size: 1.2vw;
   }
@@ -241,16 +280,28 @@ img{
 
 .popup-mobile{  
   margin-left: 10px;
-  margin-bottom: 10px;
   left: 0;
-  bottom: 0;
   width: 95%;
   transition: opacity .3s ease-out;
-  font-size: 4vw;
+  font-size: 3.5vw;
+  padding: 10px;
   h6{
-    font-size: 4.5vw;
+    font-size: 3.5vw;
+  }
+  &.atTop{
+    margin-top: 10px;
+    top: 0;
+    bottom: unset;
+  }
+  &.atBottom{
+    margin-bottom: 10px;
+    bottom: 0;    
   }
   @include media(">=tab-mob"){
     display: none;
   }
+}
+
+.modal-body .btn{
+  transform: scale(.8);  
 }
