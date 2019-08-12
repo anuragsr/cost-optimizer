@@ -3,6 +3,10 @@ body {
   overflow-y: auto;
 }
 
+.navbar img {
+  vertical-align: sub;
+}
+
 .canvas-ctn {
   -webkit-touch-callout: none;
   /* iOS Safari */
@@ -138,7 +142,11 @@ img.icon.icon-light {
 .inner {
   position: relative;
   padding: 5px;
-  background: rgba(0, 0, 0, 0.1);
+  background: #11cccc;
+}
+.inner.diff-value {
+  background: none;
+  border: 1px solid #103ace;
 }
 .inner.sec2 {
   background: #103ace;
@@ -151,18 +159,18 @@ img.icon.icon-light {
   position: absolute;
   top: 0;
   right: 0;
-  background: #ccc;
+  background: #0c2477;
 }
 .inner .diff {
   position: absolute;
-  top: -50px;
+  top: -95px;
   right: -100px;
-  height: 100px;
+  height: 150px;
   width: 100px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: url("../img/bg3.png") no-repeat center;
+  background: url("../img/bg5.png") no-repeat center;
 }
 .inner .diff div {
   background: #fff;

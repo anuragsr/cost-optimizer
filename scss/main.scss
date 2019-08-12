@@ -1,7 +1,10 @@
-body {  
-  // font-family: 'Courier New', Courier, monospace;  
+body { 
   overflow-x: hidden;
   overflow-y: auto;
+}
+
+.navbar img{
+  vertical-align: sub;
 }
 
 .canvas-ctn{
@@ -107,7 +110,7 @@ body {
   // }
 }
 
-img{  
+img{
   &.icon{
     vertical-align: top;
     height: 25px;
@@ -144,7 +147,9 @@ img{
 .inner{
   position: relative;
   padding: 5px;
-  background: rgba($b, .1);
+  // background: rgba($b, .1);
+  background: #11cccc;
+
   // &.sec{
   //   -webkit-touch-callout: none; /* iOS Safari */
   //   -webkit-user-select: none; /* Safari */
@@ -171,6 +176,10 @@ img{
   //     width: 0
   //   }
   // }
+  &.diff-value{
+    background: none;
+    border: 1px solid #103ace;
+  }
   &.sec2{
     background: rgba($sc, 1);    
     color: #fff;
@@ -181,19 +190,20 @@ img{
       position:absolute;
       top:0;
       right:0;
-      background: #ccc;
+      // background: #ccc;
+      background: #0c2477;
     }
   }
   .diff{
     position: absolute;
-    top: -50px;
+    top: -95px;
     right: -100px;
-    height: 100px;
+    height: 150px;
     width: 100px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: url('../img/bg3.png') no-repeat center;
+    background: url('../img/bg5.png') no-repeat center;
     div{
       background: $w;
       border: 1px solid $b;

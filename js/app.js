@@ -36,20 +36,6 @@ app.controller('ctrl', function($scope, $timeout, pixi){
   pixi.get(url).then(function(res){
     // l(res)
     s.networkData = res.data
-    // s.networkData = [
-    //   { id: "t1", key: "Design", value: 95, amount: 1107.5, dx: 10, dy: -30 },
-    //   { id: "t2", key: "Connectivity & Infotainment", value: 80, amount: 443.0, dx: 0, dy: -20 },
-    //   { id: "t3", key: "Display & Operator Experience", value: 85, amount: 302.0, dx: 0, dy: -20 },
-    //   { id: "t4", key: "Environmental Compatibility <br/>& Sustainability", value: 65, amount: 1248.4, dx: 0, dy: -30 },
-    //   { id: "t5", key: "Automated Driving & Safety", value: 70, amount: 302.0, dx: 0, dy: -10 },
-    //   { id: "t6", key: "Driving Dynamics", value: 80, amount: 1087.4, dx: 0, dy: -15 },
-    //   { id: "t7", key: "Ride Comfort", value: 80, amount: 986.7, dx: -50, dy: 0 },
-    //   { id: "t8", key: "Comfort", value: 85, amount: 503.4, dx: -70, dy: 0 },
-    //   { id: "t9", key: "Everyday Usability", value: 80,  amount: 503.4, dx: -140, dy: 0 },
-    //   { id: "t10", key: "Quality & Reliability", value: 85, amount: 1892.8, dx: -160, dy: -15 },
-    //   { id: "t11", key: "TCO", value: 85, amount: 865.9, dx: -70, dy: -20 },
-    //   // { id: "t12", key: "Sample", value: 75, amount: 865.9, dx: -70, dy: -20 },
-    // ]
     
     s.networkDataSec = angular.copy(s.networkData)
   
@@ -142,7 +128,6 @@ app.controller('ctrl', function($scope, $timeout, pixi){
       , content = popCtn.find(".ctn-click").length ? popCtn.find(".ctn-click").html() : popCtn.html()
 
       $(this).popover({
-        // trigger: pixi.isMobile()?'focus':'click',
         trigger: 'focus',
         container: 'body',
         placement: 'bottom',
@@ -150,97 +135,7 @@ app.controller('ctrl', function($scope, $timeout, pixi){
         content: content
       })
     })
-
-    // fullWidth = $(".outer").width()
   })
-
-  // s.doResize = function(e){
-  //   if(s.resize){
-  //     var x = e.originalEvent.x
-  //     , dx = x - m_pos
-  //     , newWidth = origWidth + dx
-
-  //     m_pos = x
-
-  //     if(!isNaN(newWidth)){
-  //       if(newWidth >=10){
-  //         // Need to calulate percent correctly here
-  //         var diff = dx/origWidth
-  //         , perc = 1 + diff
-  //         , max = s.networkData[currPanelIndex].amount*100/s.networkData[currPanelIndex].value
-  //         , min = s.networkData[currPanelIndex].amount*.3
-  //         // l(perc)
-  //         // l(pixi.round(perc*100, 5)/100)
-
-  //         origWidth = newWidth
-  //         s.networkDataSec[currPanelIndex].amount = Math.min( max, s.networkDataSec[currPanelIndex].amount*perc )
-  //         s.networkDataSec[currPanelIndex].amount = Math.max( min, s.networkDataSec[currPanelIndex].amount )
-  //         // s.networkDataSec[currPanelIndex].amount = Math.min( max, s.networkDataSec[currPanelIndex].amount*(pixi.round(perc*100, 5)/100) )
-          
-  //         percForPolygon = s.networkDataSec[currPanelIndex].amount/max
-  //         percForPolygon = parseFloat(percForPolygon.toFixed(2))*100
-  //         percForPolygon = Math.max(30, percForPolygon)
-
-  //         pixi.redrawDraggablePoint(
-  //           currPanelIndex, 
-  //           percForPolygon
-  //         )
-  //       }else{
-  //         s.finishResize()
-  //       }
-  //     }
-  //   }
-  // }
-
-  // s.finishResize = function(){
-  //   s.resize = false
-  //   origWidth = null
-
-  //   // l("Hide popup")
-  //   s.showPopup = false
-  //   $timeout(function(){
-  //     s.popupPos = "right"    
-  //   }, 500)
-  // }
-
-  // s.onPanelDrag = function(e, idx, fromTouch){
-  //   s.resize = true
-  //   currPanelIndex = idx
-  //   currPanel = $(e.currentTarget)
-  //   // l(origWidth)
-  //   if(!origWidth){
-  //     // l("New width taken")
-  //     origWidth = angular.copy(currPanel.width())
-  //   }
-
-  //   // if(fromTouch){
-  //   //   var rect = e.target.getBoundingClientRect()
-  //   //   var x = e.targetTouches[0].pageX - rect.left
-  //   //   var y = e.targetTouches[0].pageY - rect.top
-  //   //   if (origWidth - x < BORDER_SIZE) {
-  //   //     m_pos = x
-
-  //   //     // l("t" + (idx + 1), "Show popup")
-  //   //     s.popupContent = $("#t" + (idx + 1)).find(".ctn-drag").html()
-  //   //     s.showPopup = true
-  //   //     s.popupPos = "left"
-  //   //   }
-  //   // } else {      
-  //   // }
-  //   if (origWidth - e.offsetX < BORDER_SIZE) {
-  //     m_pos = e.x
-
-  //     // l("t" + (idx + 1), "Show popup")
-  //     s.popupContent = $("#t" + (idx + 1)).find(".ctn-drag").html()
-  //     s.showPopup = true
-  //     s.popupPos = "left"
-  //   }
-  // }
-
-  // s.toggleOpt = function(){
-  //   s.showOptimizer = !s.showOptimizer
-  //   pixi.setCtnCopy(s.showOptimizer)
-  // }   
 
   window.onresize = function(){
     pixi.resize()
@@ -273,11 +168,6 @@ app.controller('ctrl', function($scope, $timeout, pixi){
   s.$on('hidePopup', function(e, v){
     s.showPopup = false
     s.$apply()
-    // $timeout(function(){
-    //   if(pixi.isMobile()){
-    //     s.popupPos = "top"
-    //   }else s.popupPos = "right"    
-    // }, 500)
   })
 
   function barsFunction(){
@@ -327,6 +217,7 @@ app.controller('ctrl', function($scope, $timeout, pixi){
           // l(currPanelIndex, max, min, newWidth, oldWidth, perc)
           s.networkDataSec[currPanelIndex].amount = Math.min( max, s.networkDataSec[currPanelIndex].amount*perc )
           s.networkDataSec[currPanelIndex].amount = Math.max( min, s.networkDataSec[currPanelIndex].amount )
+          s.networkDataSec[currPanelIndex].amount = Math.round( s.networkDataSec[currPanelIndex].amount )
           s.$apply()
 
           // handle.p.width(newWidth) -> width set using angular in template
@@ -347,9 +238,6 @@ app.controller('ctrl', function($scope, $timeout, pixi){
           handle = null
           s.$apply(function(){          
             s.showPopup = false
-            // $timeout(function(){
-            //   s.popupPos = "right"    
-            // }, 500)
           })
           e.preventDefault()
         }
