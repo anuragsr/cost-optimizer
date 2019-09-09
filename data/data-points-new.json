@@ -4,8 +4,8 @@
     "key": "Design",
     "value": 95,
     "amount": 2100,
-    "dx": 10,
-    "dy": -30
+    "dx": -100,
+    "dy": -70
   },
   {
     "id": "t2",
@@ -36,23 +36,23 @@
     "key": "Safety",
     "value": 70,
     "amount": 600,
-    "dx": -25,
-    "dy": -10
+    "dx": -100,
+    "dy": 0
   },
   {
     "id": "t6",
     "key": "Comfort",
     "value": 85,
     "amount": 1900,
-    "dx": -90,
-    "dy": -15
+    "dx": -200,
+    "dy": -25
   },
   {
     "id": "t7",
     "key": "Quality & Reliability",
     "value": 85,
     "amount": 2300,
-    "dx": -160,
+    "dx": -200,
     "dy": -20
   },
   {
@@ -60,7 +60,7 @@
     "key": "Total cost of ownership",
     "value": 70,
     "amount": 950,
-    "dx": -180,
-    "dy": -20
+    "dx": -200,
+    "dy": -25
   }
 ]

@@ -7,6 +7,17 @@ body {
   vertical-align: sub;
 }
 
+.col-ctn{
+  border: 1px solid black;
+  padding: 10px;
+  @include media('>=tab-mob') {
+    height: 100%;
+  }
+  @include media('<=tab-mob') {
+    border: none;
+  }
+}
+
 .canvas-ctn{
   @include media('>sd', '<=ld') {
     transform: scale(.7);
@@ -42,12 +53,7 @@ body {
       display: none;
     }
   }
-  .ctn-btn{
-    @include media('>=tab-mob') {
-      display: none;
-    }
-  }
-  canvas{    
+  canvas{
     transform: scale(.5);
     transform-origin: left top;
   }
@@ -58,33 +64,16 @@ body {
     width: 50px;
     z-index: -1;
     text-align: right;
-    color: rgba($color: $b, $alpha: .5);
-    font-size: 14px;
+    color: rgba($b, .9);
+    font-size: 18px;    
+    font-weight: bold;
   }
-  .ind{
-    position: absolute;
-    top: 0;
-    left: 0;
-    font-size: 14px;
-    cursor: pointer;
-    border-radius: 5px;
-    background: rgba($color: $b, $alpha: .6);
-    display: inline-block;
-    color: $w;
-    padding: 5px 10px;
-    transition: all .3s;
-    &:hover{
-      background: rgba($color: $b, $alpha: 1);
-    }
-  }
-  img{
-    &.legend{      
-      height: 70px;
-      @include media('<=tab-mob') {
-        height: 40px;
-      }
-    }
-  }
+  img.legend{
+    height: 40px;
+    @include media('<=tab-mob') {
+      height: 25px;
+    }    
+  }  
   .ctn-btn{
     position: absolute;
     top: 0;
@@ -93,6 +82,9 @@ body {
     @include media('<=tab-mob') {
       transform: scale(.8);
       transform-origin: right top;
+    }
+    @include media('>=tab-mob') {
+      display: none;
     }
   }
   // .btn{
@@ -110,10 +102,53 @@ body {
   // }
 }
 
+.ind{
+  position: absolute;
+  top: 0;
+  left: 0;
+  // font-size: 14px;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  border-radius: 45px;
+  display: inline-block;
+  color: $w;
+  padding: 15px;
+  transition: all .3s;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  text-align: right;
+  width: 200px;
+  padding-right: 25px;
+  background: rgba($ind, 1);
+  &:hover{
+    background: rgba($b, 1);
+  }
+}
+
+.bar-ctn{
+  .ind{
+    left: auto;
+    right: 0;
+    padding-right: 25px;
+    height: 100%;
+    width: 90%;
+    @include media('<=tab-mob') {
+      padding-right: 15px;
+      height: 75%;
+      font-size: 14px;
+    }
+    @include media('>sd', '<=ld') {
+      font-size: 14px;
+    }
+  }
+}
+
 img{
   &.icon{
     vertical-align: top;
-    height: 25px;
+    height: 35px;
     margin-left: 0px;
     &.icon-light{
       vertical-align: middle;
@@ -124,65 +159,77 @@ img{
   }
 }
 
-.key{
-  padding: 5px;
-  border-radius: 5px;
-  cursor: pointer;
-  // font-weight: bold;
-  // font-size: 18px;
-  transition: all .3s;
-  &:hover{
-    background: rgba($color: $b, $alpha: .1);
-  }
-  &:focus{
-    outline: none;
-  }
-}
+// .key{
+//   padding: 5px;
+//   border-radius: 5px;
+//   cursor: pointer;
+//   // font-weight: bold;
+//   // font-size: 18px;
+//   transition: all .3s;
+//   &:hover{
+//     background: rgba($color: $b, $alpha: .1);
+//   }
+//   &:focus{
+//     outline: none;
+//   }
+// }
 
 .outer{
   width: $full;
   font-weight: bold;
+  span{
+    padding: 5px;
+    @include media('<=tab-mob') {
+      padding: 0;
+      font-size: 12px;
+    }
+  }
 }
 
 .inner{
   position: relative;
-  padding: 5px;
-  // background: rgba($b, .1);
-  background: #11cccc;
-
-  // &.sec{
-  //   -webkit-touch-callout: none; /* iOS Safari */
-  //   -webkit-user-select: none; /* Safari */
-  //   -khtml-user-select: none; /* Konqueror HTML */
-  //   -moz-user-select: none; /* Firefox */
-  //   -ms-user-select: none; /* Internet Explorer/Edge */
-  //   user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
-  //   min-width: 20px;
-  //   // min-width: 65px;
-  //   color: $w;
-  //   background: rgba($color: $sc, $alpha: 1);
-  //   position: relative;
-  //   &:after{
-  //     content: " ";
-  //     background-color: #ccc;
-  //     position: absolute;
-  //     top: 0;
-  //     right: 0;
-  //     width: 10px;
-  //     height: 100%;
-  //     cursor: w-resize;
-  //   }
-  //   &.result:after{
-  //     width: 0
-  //   }
-  // }
-  &.diff-value{
-    background: none;
-    border: 1px solid #103ace;
+  display: inline-block;
+  vertical-align: middle;
+  // padding: 5px;
+  height: 30px;
+  background: $pr;
+  .diff{
+    position: absolute;
+    top: -25px;
+    right: -220px;
+    // display: flex;
+    // align-items: center;
+    // justify-content: center;
+    // height: 150px;
+    // background: url('../img/bg5.png') no-repeat center;
+    div{
+      position: relative;
+      z-index: 1;
+      background: $w;
+      border: 1px solid $b;
+      padding: 10px;
+      border-radius: 35px;
+      width: 80px;
+      text-align: center; 
+    }
+    img.arr{
+      position: absolute;
+      height: 25px;
+      &.arr-top{
+        left: -60px;
+        top: -6px;
+      }
+      &.arr-bottom{
+        left: -70px;
+        top: 27px;
+      }
+    }
   }
-  &.sec2{
-    background: rgba($sc, 1);    
-    color: #fff;
+}
+
+.sec{
+  .inner{
+    background: rgba($sc, 1);  
     .handle{
       cursor: e-resize;
       height: 100%;
@@ -190,27 +237,58 @@ img{
       position:absolute;
       top:0;
       right:0;
-      // background: #ccc;
-      background: #0c2477;
     }
   }
-  .diff{
-    position: absolute;
-    top: -95px;
-    right: -100px;
-    height: 150px;
-    width: 100px;
+}
+
+.sum-ctn{
+  .title{
     display: flex;
     align-items: center;
-    justify-content: center;
-    background: url('../img/bg5.png') no-repeat center;
-    div{
-      background: $w;
-      border: 1px solid $b;
-      padding: 5px;
-      border-radius: 5px;
+    justify-content: flex-end;
+    .h2{
+      @include media('<=tab-mob') {
+        font-size: 18px;
+      }
     }
   }
+  .diff-value{
+    position: absolute;
+    top: 10px;
+    left: 25px;
+    background: $w;
+    border: 1px solid $b;
+    padding: 7px;
+    border-radius: 35px;
+    width: 70px;
+    text-align: center;
+  }  
+}
+
+.diff, .diff-value{
+  @include media('<=tab-mob') {
+    display: none;
+  }
+}
+
+.diff-mob, .diff-value-mob{
+  position: absolute;
+  @include media('>=tab-mob') {
+    display: none;
+  }
+}
+
+.diff-mob{
+  top: 12px;
+  right: 10px;
+  height: 40px;
+}
+
+.diff-value-mob{
+  left: 30px;
+  font-size: 12px;
+  font-weight: bold;
+  text-align: center;
 }
 
 .info-outer{

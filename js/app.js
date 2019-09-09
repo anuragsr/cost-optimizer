@@ -14,7 +14,6 @@ app.controller('ctrl', function($scope, $timeout, pixi){
   , s = $scope
   , handle = null
 
-  s.showOptimizer = true
   s.showPopup = false
   s.popupPos = "right"
   s.popupContent = ""
@@ -24,7 +23,7 @@ app.controller('ctrl', function($scope, $timeout, pixi){
 
   s.dividers = { 
     d: 4000,
-    m: 3000,
+    m: 4000,
   }
 
   if(pixi.isMobile()){
@@ -60,7 +59,8 @@ app.controller('ctrl', function($scope, $timeout, pixi){
       // Percent Marks
       var el = $('<div class="perc">')
       // el.html(obj + " %")
-      el.html(obj / 10 + ".0")
+      // el.html(obj / 10 + ".0")
+      el.html(obj / 10)
       if(pixi.isMobile()){
         el.css({
           transform: "translate(" + (w/2 - 50) + "px, " + (h/2 - 1.4*obj - 20) + "px)",
@@ -91,8 +91,8 @@ app.controller('ctrl', function($scope, $timeout, pixi){
     
     // Draw original network polygon
     var dp = pixi.getDataPoints(s.networkData)
-    pixi.drawPoints(dp, pixi.isMobile()?10:6, 0x11cccc)
-    pixi.drawPolygon(dp, null, null, 2, 0x11cccc)
+    pixi.drawPolygon(dp, null, null, 5, 0x00aac9)
+    pixi.drawPoints(dp, pixi.isMobile()?20:12, 0x00aac9)
 
     // Draw second polygon to be dragged
     pixi.drawDraggablePolygon(s.networkDataSec)

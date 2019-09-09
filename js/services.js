@@ -1,19 +1,19 @@
-class Dot extends PIXI.Graphics {
-  constructor(r, f, c) {
-    super()
-    this.r = r || 1
-    this.f = f || .1
-    this.c = c || 0x000000
-    this.draw()
-  }  
+// class Dot extends PIXI.Graphics {
+//   constructor(r, f, c) {
+//     super()
+//     this.r = r || 1
+//     this.f = f || .1
+//     this.c = c || 0x000000
+//     this.draw()
+//   }  
 
-  draw() {
-    this
-    .beginFill(this.c, this.f)
-    .drawCircle(this.x, this.y, this.r)
-    .endFill()
-  }
-}
+//   draw() {
+//     this
+//     .beginFill(this.c, this.f)
+//     .drawCircle(this.x, this.y, this.r)
+//     .endFill()
+//   }
+// }
 
 class Square extends PIXI.Graphics {
   constructor(s, c) {
@@ -25,8 +25,9 @@ class Square extends PIXI.Graphics {
 
   draw() {
     this
+    .lineStyle(2, 0xffffff, 1)
     .beginFill(this.c)
-    .drawRect(0, 0, this.s, this.s)
+    .drawRect(-this.s/2, -this.s/2, this.s, this.s)
     .endFill()
   }
 }
@@ -243,11 +244,12 @@ app.factory('pixi', function($q, $filter, $rootScope, $http, $q) {
 			}
 			return retArr
     },
-    drawPoints: function(points, radius, color){
+    drawPoints: function(points, side, color){
       points.forEach(function(obj){
-        var dot = new Dot(radius, 1, color)
+        var dot = new Square(side, color)
         dot.position.x = obj.x
         dot.position.y = obj.y
+        dot.rotation = Math.PI/4
         ctn.addChild(dot)
       })
     },
@@ -255,21 +257,22 @@ app.factory('pixi', function($q, $filter, $rootScope, $http, $q) {
       var polyGonArr = []
       , poly
 
-      if(isSquare){
-        points.forEach(function(obj){
-          polyGonArr.push(obj.x + obj.s/2, obj.y + obj.s/2)
-        })
-        polyGonArr.push(points[0].x + points[0].s/2, points[0].y + points[0].s/2)
-        poly = new Polygon(polyGonArr, f, fc, l, lc)
-        ctnCopy.addChild(poly)
-      }else{
-        points.forEach(function(obj){
-          polyGonArr.push(obj.x, obj.y)
-        })
-        polyGonArr.push(points[0].x, points[0].y)
-        poly = new Polygon(polyGonArr, f, fc, l, lc)
-        ctn.addChild(poly)
-      }
+      // if(isSquare){
+      //   points.forEach(function(obj){
+      //     polyGonArr.push(obj.x + obj.s/2, obj.y + obj.s/2)
+      //   })
+      //   polyGonArr.push(points[0].x + points[0].s/2, points[0].y + points[0].s/2)
+      //   poly = new Polygon(polyGonArr, f, fc, l, lc)
+      //   ctnCopy.addChild(poly)
+      // }else{
+      // }
+
+      points.forEach(function(obj){
+        polyGonArr.push(obj.x, obj.y)
+      })
+      polyGonArr.push(points[0].x, points[0].y)
+      poly = new Polygon(polyGonArr, f, fc, l, lc)
+      ctn.addChild(poly)
       
       return poly
     },
@@ -277,12 +280,13 @@ app.factory('pixi', function($q, $filter, $rootScope, $http, $q) {
       var self = this      
       points.forEach(function(obj, idx){
         var sq = new Square(side, color)
-        sq.position.x = obj.x - side/2
-        sq.position.y = obj.y - side/2
+        sq.position.x = obj.x
+        sq.position.y = obj.y
+        sq.rotation = Math.PI/4
         sq.id = "nt" + (idx + 1)
         sq.idx = idx + 1
         sqArr.push(sq)
-        ctnCopy.addChild(sq)
+        // ctnCopy.addChild(sq)
         
         // sq.visible = false
         sq.interactive = true
@@ -295,9 +299,6 @@ app.factory('pixi', function($q, $filter, $rootScope, $http, $q) {
         
         function onDragStart(e){
           // l(e.data)
-          // e.data.originalEvent.preventDefault()
-          // e.data.originalEvent.stopPropagation()
-          // app.view.style['touch-action'] = 'none'
 
           // store a reference to the data
           // the reason for this is because of multitouch
@@ -311,7 +312,7 @@ app.factory('pixi', function($q, $filter, $rootScope, $http, $q) {
           currLine = self.fl('filter', lineArr, { id: this.id })[0]
           if(self.isMobile()){
             // Show Indicator
-            $(".ind").css({
+            $(".canvas-ctn .ind").css({
               opacity: 0,
               visibility: "hidden"
             })
@@ -339,8 +340,10 @@ app.factory('pixi', function($q, $filter, $rootScope, $http, $q) {
             var newPos = this.data.getLocalPosition(this.parent)
             , point = self.getClosestPointOnLine(currLine, newPos.x, newPos.y)
 
-            this.position.x = point.x - this.s/2
-            this.position.y = point.y - this.s/2
+            // this.position.x = point.x - this.s/2
+            // this.position.y = point.y - this.s/2
+            this.position.x = point.x
+            this.position.y = point.y
 
             var idx = sqArr.indexOf(this)
             $rootScope.$broadcast("dataChange", {
@@ -367,16 +370,20 @@ app.factory('pixi', function($q, $filter, $rootScope, $http, $q) {
         this.round(percent, 5)/100
       )
 
-      sq.position.x = point.x - sq.s/2
-      sq.position.y = point.y - sq.s/2
+      sq.position.x = point.x// - sq.s/2
+      sq.position.y = point.y// - sq.s/2
 
       this.redrawPolygon()
     },
     drawDraggablePolygon: function(data){
-      this.drawDraggablePoints(this.getDataPoints(data), this.isMobile()?30:15, 0x103ace)
+      this.drawDraggablePoints(this.getDataPoints(data), this.isMobile()?20:12, 0x156c9c)
       
       // Dynamically draw secondary polygon
       this.redrawPolygon()
+
+      sqArr.forEach(function(sq){
+        ctnCopy.addChild(sq)        
+      })
     },
     drawLinesFromCenter: function(points){
       points.forEach(function(obj, idx){
@@ -423,9 +430,16 @@ app.factory('pixi', function($q, $filter, $rootScope, $http, $q) {
       })
     },
     redrawPolygon: function(){
-      if(angular.isDefined(polyCopy))
+      if(angular.isDefined(polyCopy)){
         polyCopy.destroy()
-      polyCopy = this.drawPolygon(sqArr, null, null, 2, 0x103ace, true)
+        sqArr.forEach(function(sq){
+          ctnCopy.removeChild(sq)        
+        })
+      }
+      polyCopy = this.drawPolygon(sqArr, null, null, 5, 0x156c9c, true)
+      sqArr.forEach(function(sq){
+        ctnCopy.addChild(sq)        
+      })
     }
 	}
 })
