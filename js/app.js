@@ -55,24 +55,26 @@ app.controller('ctrl', function($scope, $timeout, pixi){
     , w = canvas.width()
     , h = canvas.height()
 
-    radii.forEach(function(obj){
+    radii.forEach(function(obj){      
+
       // Percent Marks
-      var el = $('<div class="perc">')
-      // el.html(obj + " %")
-      // el.html(obj / 10 + ".0")
-      el.html(obj / 10)
-      if(pixi.isMobile()){
-        el.css({
-          transform: "translate(" + (w/2 - 50) + "px, " + (h/2 - 1.4*obj - 20) + "px)",
-          transformOrigin: "0%"      
-        })
-      }else{
-        el.css({
-          transform: "translate(" + (w/2 - 50) + "px, " + (h/2 - 2*obj - 20) + "px)",
-          transformOrigin: "0%"      
-        })
-      }
-      canvas.append(el)
+      pixi.drawPercent(obj)
+      // var el = $('<div class="perc">')
+      // // el.html(obj + " %")
+      // // el.html(obj / 10 + ".0")
+      // el.html(obj / 10)
+      // if(pixi.isMobile()){
+      //   el.css({
+      //     transform: "translate(" + (w/2 - 50) + "px, " + (h/2 - 1.4*obj - 20) + "px)",
+      //     transformOrigin: "0%"      
+      //   })
+      // }else{
+      //   el.css({
+      //     transform: "translate(" + (w/2 - 50) + "px, " + (h/2 - 2*obj - 20) + "px)",
+      //     transformOrigin: "0%"      
+      //   })
+      // }
+      // canvas.append(el)
 
       // Main Polygon Rings
       var p = pixi.getPoints(2*obj, s.networkData.length)
@@ -139,6 +141,21 @@ app.controller('ctrl', function($scope, $timeout, pixi){
 
   window.onresize = function(){
     pixi.resize()
+    $(".canvas-ctn .ind").remove()
+    var p = pixi.getPoints(220, s.networkData.length)
+    pixi.drawIndicators(p, s.networkData)
+    $('[data-toggle="popover"]').each(function(){
+      var popCtn = $('#' + $(this).data('id'))
+      , content = popCtn.find(".ctn-click").length ? popCtn.find(".ctn-click").html() : popCtn.html()
+
+      $(this).popover({
+        trigger: 'focus',
+        container: 'body',
+        placement: 'bottom',
+        html: true,
+        content: content
+      })
+    })
   }
 
   s.$on('showPopup', function(e, v){

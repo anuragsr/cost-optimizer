@@ -110,7 +110,10 @@ app.factory('pixi', function($q, $filter, $rootScope, $http, $q) {
       w = canvas.width()
       h = canvas.height()
       c = { x: w/2, y: h/2 }
-  
+      
+      app.renderer.view.width = w  
+      app.renderer.view.height = h
+      
       app.renderer.resize(w, h)
       ctn.position.set(c.x, c.y)
       ctnCopy.position.set(c.x, c.y)
@@ -135,7 +138,7 @@ app.factory('pixi', function($q, $filter, $rootScope, $http, $q) {
         var w = 800
       }
       
-      canvas.width(w)
+      // canvas.width(w)
       var h = canvas.width()*9/16 + 200
       canvas.height(h)
 
@@ -396,6 +399,20 @@ app.factory('pixi', function($q, $filter, $rootScope, $http, $q) {
         ctn.addChild(line)
       })
     },
+    drawPercent: function(obj){
+      var style = new PIXI.TextStyle({
+          align: "right",
+          fontFamily: "Arial Narrow",
+          fontSize: 18,
+          fontWeight: "bold"
+      });
+      var text = new PIXI.Text(obj / 10, style);
+      text.alpha = .9
+      text.position.x = c.x - 20
+      text.position.y = c.y - 2*obj - 15
+
+      ctnCopy.addChild(text)
+    },
     drawIndicators: function(points, data){
       var self = this
       points.forEach(function(p, idx){
@@ -422,8 +439,24 @@ app.factory('pixi', function($q, $filter, $rootScope, $http, $q) {
             visibility: "hidden"
           })
         }else{
+          var ty = "calc("+ p.y +"px - 50%)"
+          var tx = p.x +"px"
+          
+          if(idx === 0){
+            tx = "calc("+ p.x +"px - 50%)"
+            ty = "calc("+ p.y +"px - 100%)"
+          } else if(idx === 4){
+            tx = "calc("+ p.x +"px - 50%)"
+            ty = "calc("+ p.y +"px + 0%)"
+          }
+          else if(idx === 5 || idx === 6 || idx === 7){
+            tx = "calc("+ p.x +"px - 100%)"
+          }
+
           el.css({
-            transform: "translate(" + (p.x + data[idx].dx) + "px, " + (p.y + data[idx].dy) + "px)",
+            // transform: "translate(" + (p.x + data[idx].dx) + "px, " + (p.y + data[idx].dy) + "px)",
+            // transform: "translate(" + (p.x) + "px, " + (p.y) + "px)",
+            transform: "translate("+ tx + ", " + ty +")",
             transformOrigin: "0%"
           })
         }

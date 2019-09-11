@@ -28,13 +28,13 @@
 
     <div class="container-fluid p-md-4" ng-cloak>
       <div class="row">
-        <div class="col-xl-6 px-md-2 px-0">
+        <div class="col-xl-6 px-md-2 p-1">
           <div class="col-ctn mb-3 mb-md-0">            
             <h4>Characteristics in the actual<br/>and target state</h4>
             <hr class="border-dark">
+            <img class="legend" src="img/legend-new2.png"/>          
             <div class="canvas-ctn">
               <div class="canvas-overlay" ng-hide="s.overlay"></div>
-              <img class="legend" src="img/legend-new.jpg"/>
               <div class="ctn-btn">
                 <button class="btn btn-info btn-sm" ng-hide="s.overlay" ng-click="s.overlay = true;">Enable Editing</button>
                 <button class="btn btn-success btn-sm" ng-show="s.overlay" ng-click="s.overlay = false;">Done Editing</button>
@@ -43,11 +43,11 @@
             <h6>The lowest possible value of a property refers to the respective value of the Minimum Viable Product (MVP).</h6>
           </div>          
         </div>
-        <div class="col-xl-6 px-md-2 px-0">
-          <div class="col-ctn">            
+        <div class="col-xl-6 px-md-2 p-1">
+          <div class="col-ctn">
             <h4>Material costs in the actual <br/>and target state [ EUR / Unit ]</h4>
             <hr class="border-dark">          
-            <div class="row mb-3" ng-repeat="d in networkData track by $index">
+            <div class="row mb-3 mr-0" ng-repeat="d in networkData track by $index">
               <div class="col-md-3 col-5 bar-ctn">
                 <div tabindex="0" class="ind" title="{{d.key}}" data-toggle="popover" data-id="{{d.id}}">
                   {{ d.key }}
@@ -62,14 +62,16 @@
                   </div>
                   <div class="sec">                   
                     <div class="inner" ng-style="{'width': (networkDataSec[$index].amount*100)/currDivider + '%'}">
-                      <div class="handle"></div>
+                      <div class="handle">                        
+                        <div class="handle-inner"></div>
+                      </div>
                     </div>
                     <span>{{ networkDataSec[$index].amount | currency:"":0 }}</span>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="row sum-ctn">
+            <div class="row mr-0 sum-ctn">
               <div class="col-md-3 col-5 title">
                 <span class="h2">Total</span>
                 <div class="diff-value-mob">

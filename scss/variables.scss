@@ -15,5 +15,8 @@ $sh: 0 0 5px 2px rgba($color: $b, $alpha: .1);
 $breakpoints: (
   'tab-mob': 860px,
   'sd': 1200px,
+  'lp': 1366px,
+  'smd': 1450px,
+  'md': 1600px,
   'ld': 1800px
 ) !default;
