@@ -9,7 +9,7 @@
   },
   {
     "id": "t2",
-    "key": "Konnektivität",
+    "key": "Connectivity",
     "value": 80,
     "amount": 500,
     "dx": 0,
@@ -17,7 +17,7 @@
   },
   {
     "id": "t3",
-    "key": "Benutzer-freundlichkeit",
+    "key": "User Experience",
     "value": 85,
     "amount": 750,
     "dx": 0,
@@ -25,7 +25,7 @@
   },
   {
     "id": "t4",
-    "key": "Nachhaltigkeit",
+    "key": "Sustainability",
     "value": 65,
     "amount": 900,
     "dx": 0,
@@ -33,7 +33,7 @@
   },
   {
     "id": "t5",
-    "key": "Sicherheit",
+    "key": "Safety",
     "value": 70,
     "amount": 600,
     "dx": -100,
@@ -41,7 +41,7 @@
   },
   {
     "id": "t6",
-    "key": "Komfort",
+    "key": "Comfort",
     "value": 85,
     "amount": 1900,
     "dx": -200,
@@ -49,7 +49,7 @@
   },
   {
     "id": "t7",
-    "key": "Qualität und Zuverlässigkeit",
+    "key": "Quality & Reliability",
     "value": 85,
     "amount": 2300,
     "dx": -200,

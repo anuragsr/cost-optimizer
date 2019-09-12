@@ -2,6 +2,15 @@ var l = console.log.bind(window.console)
 , app = angular.module('app', [])
 
 app.controller('ctrl', function($scope, $timeout, pixi){
+  var msie = window.document.documentMode
+  , s = $scope
+
+  if(angular.isDefined(msie)){
+    s.isSupported = false
+    l(s.isSupported)
+    return
+  }
+
   var BORDER_SIZE = 10  
   , m_pos = 0
   , currPanel
@@ -11,15 +20,16 @@ app.controller('ctrl', function($scope, $timeout, pixi){
   // , url = 'data/data-points.json'
   , url = 'data/data-points-new.json'
   , sum = 0
-  , s = $scope
   , handle = null
 
+  s.isSupported = true
   s.showPopup = false
   s.popupPos = "right"
   s.popupContent = ""
   s.resize = false
   s.showLoader = true
   s.overlay = false
+  l(s.isSupported)
 
   s.dividers = { 
     d: 4000,
@@ -87,7 +97,11 @@ app.controller('ctrl', function($scope, $timeout, pixi){
     })
 
     // Indicators
-    var p = pixi.getPoints(220, s.networkData.length)
+    if(pixi.isMobile()){
+      var p = pixi.getPoints(100, s.networkData.length)
+    } else{
+      var p = pixi.getPoints(220, s.networkData.length)
+    }
     // pixi.drawPoints(p, 2)
     pixi.drawIndicators(p, s.networkData)
     
@@ -140,41 +154,44 @@ app.controller('ctrl', function($scope, $timeout, pixi){
   })
 
   window.onresize = function(){
-    pixi.resize()
-    $(".canvas-ctn .ind").remove()
-    var p = pixi.getPoints(220, s.networkData.length)
-    pixi.drawIndicators(p, s.networkData)
-    $('[data-toggle="popover"]').each(function(){
-      var popCtn = $('#' + $(this).data('id'))
-      , content = popCtn.find(".ctn-click").length ? popCtn.find(".ctn-click").html() : popCtn.html()
+    if(!pixi.isMobile()){    
+      pixi.resize()
+      $(".canvas-ctn .ind").remove()
+      var p = pixi.getPoints(220, s.networkData.length)
+      pixi.drawIndicators(p, s.networkData)
+      $('[data-toggle="popover"]').each(function(){
+        var popCtn = $('#' + $(this).data('id'))
+        , content = popCtn.find(".ctn-click").length ? popCtn.find(".ctn-click").html() : popCtn.html()
 
-      $(this).popover({
-        trigger: 'focus',
-        container: 'body',
-        placement: 'bottom',
-        html: true,
-        content: content
+        $(this).popover({
+          trigger: 'focus',
+          container: 'body',
+          placement: 'bottom',
+          html: true,
+          content: content
+        })
       })
-    })
+    }
   }
 
   s.$on('showPopup', function(e, v){
     // l(e, v)
     if(pixi.isMobile()){
       // l(v.idx)
-      switch(v.idx){
-        case 3:
-        case 4:
-        case 5:
-        case 6:
-        case 7:
-          s.popupPos = "top"
-        break;
+      // switch(v.idx){
+      //   case 3:
+      //   case 4:
+      //   case 5:
+      //   case 6:
+      //   case 7:
+      //     s.popupPos = "top"
+      //   break;
 
-        default: 
-          s.popupPos = "bottom"
-        break;
-      }
+      //   default: 
+      //     s.popupPos = "bottom"
+      //   break;
+      // }
+      s.popupPos = "top"      
     } else s.popupPos = "right"
 
     s.popupContent = $("#nt" + v.idx).find(".ctn-drag").html()
@@ -202,9 +219,10 @@ app.controller('ctrl', function($scope, $timeout, pixi){
         e.preventDefault()
         var evt = e.originalEvent.touches[0]
         handle.x = evt.pageX
-        if(evt.clientY <= window.innerHeight/2){          
-          s.popupPos = "bottom"
-        } else s.popupPos = "top"
+        // if(evt.clientY <= window.innerHeight/2){          
+        //   s.popupPos = "bottom"
+        // } else s.popupPos = "top"
+        s.popupPos = "top"
       }
 
       s.popupContent = $("#t" + (currPanelIndex + 1)).find(".ctn-drag").html()
@@ -262,7 +280,7 @@ app.controller('ctrl', function($scope, $timeout, pixi){
     })
 
     if(pixi.isMobile()){
-      $("#exampleModal").modal("show")
+      // $("#exampleModal").modal("show")
     }
   }
 
@@ -275,4 +293,9 @@ app.controller('ctrl', function($scope, $timeout, pixi){
 })
 .filter('trustedHTML', function($sce){
   return function(text) { return $sce.trustAsHtml(text) }
+})
+.filter('noHyphen', function(){
+  return function(text) { 
+    return text.replace(/-/g, '')
+  }
 })

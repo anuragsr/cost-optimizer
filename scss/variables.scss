@@ -13,6 +13,7 @@ $full: 100%;
 $sh: 0 0 5px 2px rgba($color: $b, $alpha: .1);
 
 $breakpoints: (
+  'mob': 500px,
   'tab-mob': 860px,
   'sd': 1200px,
   'lp': 1366px,

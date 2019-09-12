@@ -15,70 +15,130 @@
 //   }
 // }
 
-class Square extends PIXI.Graphics {
-  constructor(s, c) {
-    super()
-    this.s = s || 1
-    this.c = c || 0x000000
-    this.draw()
-  }  
+function _instanceof(left, right) { if (right != null && typeof Symbol !== "undefined" && right[Symbol.hasInstance]) { return !!right[Symbol.hasInstance](left); } else { return left instanceof right; } }
 
-  draw() {
-    this
-    .lineStyle(2, 0xffffff, 1)
-    .beginFill(this.c)
-    .drawRect(-this.s/2, -this.s/2, this.s, this.s)
-    .endFill()
-  }
-}
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-class Polygon extends PIXI.Graphics {
-  constructor(p, f, fc, l, lc) {
-    super()
-    this.p = p || []
-    this.f = f || 0
-    this.fc = fc || 0x000000
-    this.l = l || 1
-    this.lc = lc || 0x000000
-    this.draw()
-  }
+function _classCallCheck(instance, Constructor) { if (!_instanceof(instance, Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-  draw() {
-    this
-    .lineStyle(this.l, this.lc)
-    .beginFill(this.fc, this.f)
-    .drawPolygon(this.p)
-    .endFill()
-  }
-}
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-class Line extends PIXI.Graphics {
-  constructor(points, lineWidth, lineColor, opacity) {
-    super()   
-    var s = this.lineWidth = lineWidth || 1
-    var c = this.lineColor = lineColor || "0x000000"
-    var o = this.opacity = opacity || 1
-    this.points = points
-    this.draw(s, c, o, points)
-  }
-  
-  draw(s, c, o, p){
-    this
-    .lineStyle(s, c, o)
-    .moveTo(p[0], p[1])
-    .lineTo(p[2], p[3])
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var Square =
+/*#__PURE__*/
+function (_PIXI$Graphics) {
+  _inherits(Square, _PIXI$Graphics);
+
+  function Square(s, c) {
+    var _this;
+
+    _classCallCheck(this, Square);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Square).call(this));
+    _this.s = s || 1;
+    _this.c = c || 0x000000;
+
+    _this.draw();
+
+    return _this;
   }
 
-  update(p) {
-    var self = this
-    var points = this.points = p.map(function(val, index){ 
-      return val || self.points[index]
-    });
-    var s = this.lineWidth, c = this.lineColor, o = this.op   
-    this.clear()
-    this.draw(s, c, o, points)
+  _createClass(Square, [{
+    key: "draw",
+    value: function draw() {
+      this.lineStyle(2, 0xffffff, 1).beginFill(this.c).drawRect(-this.s / 2, -this.s / 2, this.s, this.s).endFill();
+    }
+  }]);
+
+  return Square;
+}(PIXI.Graphics);
+
+var Polygon =
+/*#__PURE__*/
+function (_PIXI$Graphics2) {
+  _inherits(Polygon, _PIXI$Graphics2);
+
+  function Polygon(p, f, fc, l, lc) {
+    var _this2;
+
+    _classCallCheck(this, Polygon);
+
+    _this2 = _possibleConstructorReturn(this, _getPrototypeOf(Polygon).call(this));
+    _this2.p = p || [];
+    _this2.f = f || 0;
+    _this2.fc = fc || 0x000000;
+    _this2.l = l || 1;
+    _this2.lc = lc || 0x000000;
+
+    _this2.draw();
+
+    return _this2;
   }
-}
+
+  _createClass(Polygon, [{
+    key: "draw",
+    value: function draw() {
+      this.lineStyle(this.l, this.lc).beginFill(this.fc, this.f).drawPolygon(this.p).endFill();
+    }
+  }]);
+
+  return Polygon;
+}(PIXI.Graphics);
+
+var Line =
+/*#__PURE__*/
+function (_PIXI$Graphics3) {
+  _inherits(Line, _PIXI$Graphics3);
+
+  function Line(points, lineWidth, lineColor, opacity) {
+    var _this3;
+
+    _classCallCheck(this, Line);
+
+    _this3 = _possibleConstructorReturn(this, _getPrototypeOf(Line).call(this));
+    var s = _this3.lineWidth = lineWidth || 1;
+    var c = _this3.lineColor = lineColor || "0x000000";
+    var o = _this3.opacity = opacity || 1;
+    _this3.points = points;
+
+    _this3.draw(s, c, o, points);
+
+    return _this3;
+  }
+
+  _createClass(Line, [{
+    key: "draw",
+    value: function draw(s, c, o, p) {
+      this.lineStyle(s, c, o).moveTo(p[0], p[1]).lineTo(p[2], p[3]);
+    }
+  }, {
+    key: "update",
+    value: function update(p) {
+      var self = this;
+      var points = this.points = p.map(function (val, index) {
+        return val || self.points[index];
+      });
+      var s = this.lineWidth,
+          c = this.lineColor,
+          o = this.op;
+      this.clear();
+      this.draw(s, c, o, points);
+    }
+  }]);
+
+  return Line;
+}(PIXI.Graphics);
 
 app.factory('pixi', function($q, $filter, $rootScope, $http, $q) {
   var canvas = $(".canvas-ctn")
@@ -132,8 +192,8 @@ app.factory('pixi', function($q, $filter, $rootScope, $http, $q) {
     init: function(){
       if(this.isMobile()){
         var w = "100%"        
-        ctn.scale.set(.7)
-        ctnCopy.scale.set(.7)
+        ctn.scale.set(.6)
+        ctnCopy.scale.set(.6)
       }else{
         var w = 800
       }
@@ -313,20 +373,20 @@ app.factory('pixi', function($q, $filter, $rootScope, $http, $q) {
           $rootScope.$broadcast("showPopup", { idx: this.idx })
 
           currLine = self.fl('filter', lineArr, { id: this.id })[0]
-          if(self.isMobile()){
-            // Show Indicator
-            $(".canvas-ctn .ind").css({
-              opacity: 0,
-              visibility: "hidden"
-            })
+          // if(self.isMobile()){
+          //   // Show Indicator
+          //   $(".canvas-ctn .ind").css({
+          //     opacity: 0,
+          //     visibility: "hidden"
+          //   })
 
-            canvas
-            .find("[data-id='" + this.id + "']")
-            .css({
-              opacity: 1,
-              visibility: "visible"
-            })
-          }
+          //   canvas
+          //   .find("[data-id='" + this.id + "']")
+          //   .css({
+          //     opacity: 1,
+          //     visibility: "visible"
+          //   })
+          // }
 			  }
 
 		    function onDragEnd(){
@@ -402,7 +462,7 @@ app.factory('pixi', function($q, $filter, $rootScope, $http, $q) {
     drawPercent: function(obj){
       var style = new PIXI.TextStyle({
           align: "right",
-          fontFamily: "Arial Narrow",
+          fontFamily: "Arial Narrow, Arial",
           fontSize: 18,
           fontWeight: "bold"
       });
@@ -425,20 +485,47 @@ app.factory('pixi', function($q, $filter, $rootScope, $http, $q) {
         el.attr({
           "data-id": "nt" + (idx+1),
           "data-toggle": "popover",
-          title: data[idx].key,
+          title: data[idx].key.replace(/-/g, ''),
           class: "ind",
           tabindex: 0
         })
 
+        // if(self.isMobile()){
+        //   el.css({
+        //     bottom: -30,
+        //     top: "unset",
+        //     left: "50%",            
+        //     transform: "translateX(-50%)",
+        //     visibility: "hidden"
+        //   })
+        // }else{
         if(self.isMobile()){
-          el.css({
-            bottom: -30,
-            top: "unset",
-            left: "50%",            
-            transform: "translateX(-50%)",
-            visibility: "hidden"
-          })
-        }else{
+          var ty = "calc("+ p.y +"px - 50%)"
+          var tx = p.x +"px"
+          
+          if(idx === 0){
+            tx = "calc("+ p.x +"px - 50%)"
+            ty = "calc("+ p.y +"px - 200%)"
+          } else if(idx === 1 || idx === 2){
+            tx = "calc("+ p.x +"px + 20%)"
+            ty = "calc("+ p.y +"px - 150%)"
+          } else if(idx === 3){
+            tx = "calc("+ p.x +"px + 25%)"
+            ty = "calc("+ p.y +"px + 50%)"
+          } else if(idx === 4){
+            tx = "calc("+ p.x +"px - 50%)"
+            ty = "calc("+ p.y +"px + 100%)"
+          } else if(idx === 5){
+            tx = "calc("+ p.x +"px - 125%)"
+            ty = "calc("+ p.y +"px + 50%)"
+          } else if(idx === 6){
+            tx = "calc("+ p.x +"px - 115%)"
+            ty = "calc("+ p.y +"px + 50%)"
+          } else if(idx === 7){
+            tx = "calc("+ p.x +"px - 125%)"
+            ty = "calc("+ p.y +"px - 125%)"
+          }
+        }else{          
           var ty = "calc("+ p.y +"px - 50%)"
           var tx = p.x +"px"
           
@@ -452,6 +539,7 @@ app.factory('pixi', function($q, $filter, $rootScope, $http, $q) {
           else if(idx === 5 || idx === 6 || idx === 7){
             tx = "calc("+ p.x +"px - 100%)"
           }
+        }
 
           el.css({
             // transform: "translate(" + (p.x + data[idx].dx) + "px, " + (p.y + data[idx].dy) + "px)",
@@ -459,7 +547,7 @@ app.factory('pixi', function($q, $filter, $rootScope, $http, $q) {
             transform: "translate("+ tx + ", " + ty +")",
             transformOrigin: "0%"
           })
-        }
+        // }
       })
     },
     redrawPolygon: function(){

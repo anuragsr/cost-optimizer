@@ -1,16 +1,23 @@
 body {
   overflow-x: hidden;
   overflow-y: auto;
-  font-family: Arial Narrow;
+  font-family: Arial Narrow, Arial;
 }
 @media (max-width: 860px) {
   body {
     cursor: pointer;
+    overflow-x: hidden;
   }
 }
 
 .navbar img {
-  vertical-align: sub;
+  vertical-align: middle;
+}
+
+.ctn-un .ctn-un-inner {
+  position: relative;
+  top: 250px;
+  text-align: center;
 }
 
 .col-ctn {
@@ -41,7 +48,7 @@ body {
 }
 @media (max-width: 860px) {
   .canvas-ctn {
-    margin-bottom: 40px;
+    margin-bottom: 25px;
   }
 }
 @media (max-width: 1200px) {
@@ -114,7 +121,7 @@ body {
 }
 
 img.legend {
-  height: 40px;
+  height: 30px;
 }
 @media (max-width: 860px) {
   img.legend {
@@ -136,14 +143,28 @@ img.legend {
   transition: all 0.3s;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  text-align: right;
+  justify-content: center;
+  text-align: center;
   width: 200px;
+  height: 70px;
   padding-right: 25px;
   background: #8d9399;
 }
 .ind:hover {
   background: black;
+}
+@media (max-width: 500px) {
+  .ind {
+    width: 65px;
+    height: 15px;
+    font-size: 8px;
+    padding-right: 15px;
+  }
+}
+@media (max-width: 500px) {
+  .ind .icon {
+    display: none;
+  }
 }
 
 .bar-ctn .ind {
@@ -151,7 +172,7 @@ img.legend {
   right: 0;
   padding-right: 25px;
   height: 100%;
-  width: 90%;
+  width: 88%;
 }
 @media (max-width: 860px) {
   .bar-ctn .ind {
@@ -176,15 +197,12 @@ img.legend {
 }
 
 img.icon {
-  vertical-align: top;
   height: 35px;
-  margin-left: 0px;
 }
 img.icon.icon-light {
-  vertical-align: middle;
-  margin-right: -7px;
-  margin-left: 5px;
   filter: invert(100%);
+  position: absolute;
+  right: 10px;
 }
 
 .outer {
@@ -251,19 +269,19 @@ img.icon.icon-light {
   align-items: center;
   justify-content: center;
 }
-.sec .inner .handle .handle-inner {
-  height: 90%;
-  width: 2px;
-  background: rgba(0, 0, 0, 0.5);
-}
 
 .sum-ctn .title {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: flex-end;
 }
 @media (max-width: 860px) {
-  .sum-ctn .title .h2 {
+  .sum-ctn .title {
+    padding-right: 0 !important;
+  }
+}
+@media (max-width: 860px) {
+  .sum-ctn .title .h4 {
     font-size: 18px;
   }
 }
@@ -301,7 +319,8 @@ img.icon.icon-light {
 }
 
 .diff-value-mob {
-  left: 30px;
+  right: 0;
+  bottom: 15px;
   font-size: 12px;
   font-weight: bold;
   text-align: center;
@@ -421,7 +440,7 @@ img.icon.icon-light {
 }
 
 .popover {
-  font-family: "Arial Narrow" !important;
+  font-family: Arial Narrow, Arial !important;
 }
 .popover .popover-header {
   font-weight: bold;
