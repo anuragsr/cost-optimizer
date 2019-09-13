@@ -1,7 +1,7 @@
 var l = console.log.bind(window.console)
 , app = angular.module('app', [])
 
-app.controller('ctrl', function($scope, $timeout, pixi){
+app.controller('ctrl', function($scope, $rootScope, pixi){
   var msie = window.document.documentMode
   , s = $scope
 
@@ -143,13 +143,30 @@ app.controller('ctrl', function($scope, $timeout, pixi){
       var popCtn = $('#' + $(this).data('id'))
       , content = popCtn.find(".ctn-click").length ? popCtn.find(".ctn-click").html() : popCtn.html()
 
-      $(this).popover({
+      $(this)
+      .popover({
         trigger: 'focus',
         container: 'body',
         placement: 'bottom',
         html: true,
         content: content
       })
+      // .on('shown.bs.popover', function (e) {
+      //   var el = $(e.currentTarget)
+      //   if(el.hasClass("bar-line")){ // Left popup
+      //     s.popupPos = "left"
+      //   } else{
+      //     s.popupPos = "right"
+      //   }
+      //   s.popupContent = $("#" + el.data("id")).find(".ctn-drag").html()
+      //   s.showPopup = true
+      //   s.$apply()
+      // })
+      // .on('hide.bs.popover', function (e) {
+      //   s.showPopup = false
+      //   s.$apply()     
+      // })
+
     })
   })
 
@@ -280,7 +297,7 @@ app.controller('ctrl', function($scope, $timeout, pixi){
     })
 
     if(pixi.isMobile()){
-      // $("#exampleModal").modal("show")
+      $("#exampleModal").modal("show")
     }
   }
 

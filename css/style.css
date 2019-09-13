@@ -133,6 +133,7 @@ img.legend {
   position: absolute;
   top: 0;
   left: 0;
+  z-index: 2;
   font-size: 20px;
   line-height: 1;
   cursor: pointer;
@@ -166,6 +167,11 @@ img.legend {
     display: none;
   }
 }
+@media (min-width: 860px) {
+  .ind .ind-text {
+    width: 75%;
+  }
+}
 
 .bar-ctn .ind {
   left: auto;
@@ -183,7 +189,7 @@ img.legend {
 }
 @media (min-width: 1201px) and (max-width: 1600px) {
   .bar-ctn .ind {
-    font-size: 14px;
+    font-size: 12px;
   }
 }
 @media (min-width: 1601px) and (max-width: 1800px) {
@@ -198,6 +204,11 @@ img.legend {
 
 img.icon {
   height: 35px;
+}
+@media (min-width: 1201px) and (max-width: 1600px) {
+  img.icon {
+    height: 20px;
+  }
 }
 img.icon.icon-light {
   filter: invert(100%);

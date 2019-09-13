@@ -143,6 +143,7 @@ img.legend{
   position: absolute;
   top: 0;
   left: 0;
+  z-index: 2;
   // font-size: 14px;
   font-size: 20px;
   line-height: 1;
@@ -174,6 +175,11 @@ img.legend{
       display: none;
     }
   }
+  .ind-text{
+    @include media('>=tab-mob') {
+      width: 75%;
+    }
+  }
 }
 
 .bar-ctn{
@@ -189,7 +195,7 @@ img.legend{
       font-size: 12px;
     }
     @include media('>sd', '<=md') {
-      font-size: 14px;
+      font-size: 12px;
       // width: 120px;
     } 
     @include media('>md', '<=ld') {
@@ -205,6 +211,9 @@ img.legend{
 img{
   &.icon{
     height: 35px;
+    @include media('>sd', '<=md') {
+      height: 20px;
+    } 
     // vertical-align: top;
     // margin-left: 0px;
     &.icon-light{

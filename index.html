@@ -53,8 +53,8 @@
             <hr class="border-dark">          
             <div class="row mb-3 mr-0" ng-repeat="d in networkData track by $index">
               <div class="col-md-3 col-5 bar-ctn">
-                <div tabindex="0" class="ind" title="{{d.key | noHyphen}}" data-toggle="popover" data-id="{{d.id}}">
-                  {{ d.key }}
+                <div tabindex="0" class="ind bar-line" title="{{d.key | noHyphen}}" data-toggle="popover" data-id="{{d.id}}">
+                  <div class="ind-text">{{ d.key }}</div>
                   <img class='icon icon-light' src='img/info.svg' />
                 </div>
               </div>

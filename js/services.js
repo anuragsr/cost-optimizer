@@ -481,7 +481,7 @@ app.factory('pixi', function($q, $filter, $rootScope, $http, $q) {
         canvas.append(el)
         
         // el.html((idx+1) + ". " + data[idx].key)
-        el.html(data[idx].key + "<img class='icon icon-light' src='img/info.svg' />")
+        el.html("<div class'ind-text'>" + data[idx].key + "</div><img class='icon icon-light' src='img/info.svg' />")
         el.attr({
           "data-id": "nt" + (idx+1),
           "data-toggle": "popover",
