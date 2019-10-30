@@ -1,0 +1,21 @@
+{
+	"nav_title": "Dynamic Product Cost Configurator",
+	"page_title": "The interactive dynamic product cost configurator",
+	"heading1": "Property dimensions in the original and target state",
+	"sub_heading1": "Address your product costs property by property",
+	"heading2": "Material costs in the original and target state",
+	"sub_heading2": "Find here the product costs and savings potential property by property",
+	"btn_enable": "Enable Editing",
+	"btn_done": "Done Editing",
+	"legend_orig": "Original",
+	"legend_targ": "Target",
+	"total": "Total",
+	"footer_text1": "RETURN TO ARTICLE",
+	"footer_text2": "The lowest possible value of a property refers to the respective value of the Minimum Viable Product (MVP).",
+	"footer_text3": "1) [EUR / Unit]",	
+	"modal_title": "How to activate the charts?",
+	"modal_ins1_1": "To enable editing, please click the ",
+	"modal_ins1_2": "button to move points on the radar chart.",
+	"modal_ins2_1": "Once done, click the ",
+	"modal_ins2_2": "button to finish."
+}

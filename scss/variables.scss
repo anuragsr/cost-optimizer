@@ -1,12 +1,22 @@
 // $pr: #11cccc;
 // $sc: #103ace;
 
-$pr: #00aac9;
-$sc: #156c9c;
+// $pr: #00aac9;
+// $sc: #156c9c;
+
+$pr: #73b657;
+$sc: #166c9d;
+
 $ind: #8d9399;
+$ind-bg: #ced2d5;
+
+$pop-bg: #dee0e3;
+$btn-en: #f5a241;
+$btn-dn: #41bbd4;
 
 $b: #000;
 $w: #fff;
+$tr: transparent;
 
 // $wid: 800px;
 $full: 100%;
@@ -17,7 +27,23 @@ $breakpoints: (
   'tab-mob': 860px,
   'sd': 1200px,
   'lp': 1366px,
-  'smd': 1450px,
   'md': 1600px,
   'ld': 1800px
 ) !default;
+
+// Justify content: center
+%j-c {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// Prefix & Keyframes mixins
+@mixin prefixed($property, $value) {
+  -webkit-#{$property}: #{$value}; /* Safari */
+  -khtml-#{$property}: #{$value}; /* Konqueror HTML */  
+  -moz-#{$property}: #{$value};  /* Firefox */
+  -ms-#{$property}: #{$value};  /* Internet Explorer/Edge */
+  -o-#{$property}: #{$value};  /* Opera */
+  #{$property}: #{$value};    /* Non-prefixed version */
+}

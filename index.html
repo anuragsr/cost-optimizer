@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Dynamischer Produktkostenkonfigurator</title>
+    <title>Dynamic Product Cost Configurator</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/style.css" />
@@ -24,100 +24,146 @@
       </div>
     </div>
 
-    <nav class="navbar navbar-dark bg-dark">
+    <nav class="navbar navbar-dark">
       <a class="navbar-brand mr-0" href="#" onclick="window.location.reload(true);">
-        <img src="img/logo1.png" height="30" />  Dynamischer Produktkostenkonfigurator
+        <img src="img/logo1.png" height="30" />&nbsp;&nbsp;{{ 'nav_title' | translate }}
       </a>
     </nav>
 
-    <div class="container-fluid p-md-4" ng-show="isSupported" ng-cloak>
-      <div class="row">
+    <div class="container-fluid" ng-show="isSupported" ng-cloak>
+			<div class="page-title text-center">{{ 'page_title' | translate }}</div>			
+			<div class="row">
         <div class="col-xl-6 px-md-2 p-1">
-          <div class="col-ctn mb-3 mb-md-0">            
-            <h4>Eigenschaften im Ist-<br/>und Zielzustand</h4>
-            <hr class="border-dark">
-            <img class="legend" src="img/legend-new2_de.png"/>          
-            <div class="canvas-ctn">
-              <div class="canvas-overlay" ng-hide="s.overlay"></div>
-              <div class="ctn-btn">
-                <button class="btn btn-info btn-sm" ng-hide="s.overlay" ng-click="s.overlay = true;">Editieren aktivieren</button>
-                <button class="btn btn-success btn-sm" ng-show="s.overlay" ng-click="s.overlay = false;">Fertig</button>
-              </div>
-            </div>             
-            <h6>Die geringstm&ouml;gliche Eigenschaftsausprägung entspricht der Eigenschaft des Minimum Viable Product (MVP).</h6>
-          </div>          
+					<div class="ctn-caret text-center"><img src="img/caret-down.png" alt=""></div>
+          <div class="col-ctn mb-3 mb-md-0 col-bdr">            
+            <div class="heading text-center">{{ 'heading1' | translate}}</div>
+						<div class="sub-heading text-center">{{ 'sub_heading1' | translate }}</div>
+						<div class="canvas-ctn">
+							<div class="canvas-overlay" ng-hide="s.overlay"></div>
+							<div class="ctn-btn">
+								<button class="btn btn-enable btn-sm" ng-hide="s.overlay" ng-click="s.overlay = true;">
+									{{ 'btn_enable' | translate }}<img src="img/icon-enable.jpg" alt="" />
+								</button>
+								<button class="btn btn-done btn-sm" ng-show="s.overlay" ng-click="s.overlay = false;">
+									{{ 'btn_done' | translate }}<img src="img/icon-done.jpg" alt="" />
+								</button>
+							</div>
+						</div>
+						<div class="legend">
+							<div class="legend-ind mr-2"></div><span class="mr-4">{{ 'legend_orig' | translate }}</span>
+							<div class="legend-ind mr-2"></div><span>{{ 'legend_targ' | translate }}</span>
+						</div>
+					</div>    
+					<div class="row mobile-only">
+						<div class="ctn-foot back col-md-2">
+							<a href="#" onclick="window.location.reload(true);">
+								<img src="img/return.jpg" alt="">{{ 'footer_text1' | translate }}
+							</a>
+						</div>
+						<div class="ctn-foot text col-md-10">
+							<span>{{ 'footer_text2' | translate }}</span>
+						</div>
+					</div>
         </div>
         <div class="col-xl-6 px-md-2 p-1">
+					<div class="text-center">
+						<img class="caret-up" src="img/caret-down.png" alt="">
+					</div>
+					<div class="text-center">
+						<img class="caret-down" src="img/caret-down.png" alt="">
+					</div>
           <div class="col-ctn">
-            <h4>Materialkosten im Ist-<br/> und Zielzustand [EUR/Einheit]</h4>
-            <hr class="border-dark">          
-            <div class="row mb-3 mr-0" ng-repeat="d in networkData track by $index">
-              <div class="col-md-3 col-5 bar-ctn">
-                <div tabindex="0" class="ind bar-line" title="{{d.key | noHyphen}}" data-toggle="popover" data-id="{{d.id}}">
-                  <div class="ind-text">{{ d.key }}</div>
-                  <img class='icon icon-light' src='img/info.svg' />
+            <div class="heading text-center">{{ 'heading2' | translate }}<sup>1)</sup></div>
+            <div class="sub-heading text-center">{{ 'sub_heading2' | translate }}</div>
+						<div class="spacer"></div>
+						<div class="row mb-2 mr-0 align-items-center" ng-repeat="d in networkData track by $index">
+              <div class="col-md-3 col-4 bar-ctn">
+                <div class="ind bar-line">
+									<div 
+										class="ind-text"
+										tabindex="0" 
+										data-toggle="popover" 
+										data-id="{{d.id}}" 
+										ng-bind-html="d.key | trustedHTML"
+										></div>
+										<!-- title="{{d.pop_key ? d.pop_key : d.key | noHyphen}}"  -->
                 </div>
               </div>
-              <div class="col-md-9 col-7 ">
+              <div class="col-md-9 col-8">
                 <div class="outer">                
-                  <div>                    
+                  <div>              
                     <div class="inner" ng-style="{'width': (d.amount*100)/currDivider + '%'}"></div>
                     <span>{{ d.amount | currency:"":0 }}</span>
                   </div>
                   <div class="sec">                   
                     <div class="inner" ng-style="{'width': (networkDataSec[$index].amount*100)/currDivider + '%'}">
-                      <div class="handle">                        
-                      </div>
+                      <div class="handle"><img src="img/handle.jpg" alt=""></div>
                     </div>
                     <span>{{ networkDataSec[$index].amount | currency:"":0 }}</span>
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="row mr-0 sum-ctn">
-              <div class="col-md-3 col-5 title">
-                <span class="h4">Gesamtsumme</span>
-                <div class="diff-value-mob">
-                  {{ newSum - sum | currency:"":0 }}
-                  <span ng-style="{'color' : newSum>sum?'red':'green'}">
-                    ( {{ (((newSum - sum)/sum)*100).toFixed(2) }}% )
-                  </span>
-                </div>
+						</div>
+						<hr class="border-dark">
+            <div class="row mr-0 sum-ctn align-items-center">
+              <div class="col-md-3 col-4 title">
+								<div class="ind bar-line">
+									<div class="diff-value">{{ newSum - sum | currency:"":0 }}</div>
+									<div class="ind-text">
+										{{ 'total' | translate }}
+										<div class="mobile-only">{{ newSum - sum | currency:"":0 }}</div>
+										<div class="mobile-only">( {{ (((newSum - sum)/sum)*100).toFixed(2) }}% )</div>
+									</div>
+								</div>
               </div>
-              <div class="col-md-9 col-7">
+              <div class="col-md-9 col-8">
                 <div class="outer">
-                  <div>                    
+                  <div class="pr">
                     <div class="inner" ng-style="{'width': (sum*100)/22000 + '%'}" ></div>
                     <span>{{ sum | currency:"":0 }}</span>
                   </div>
                   <div class="sec">
                     <div class="inner" ng-style="{'width': (newSum*100)/22000 + '%'}">
                       <div class="diff">
-                        <div ng-style="{'color' : newSum>sum?'red':'green'}">{{ (((newSum - sum)/sum)*100).toFixed(2) }}%</div>
-                        <img class="arr arr-top" src="img/arr-top.png" />
-                        <img class="arr arr-bottom" src="img/arr-bottom.png" />
+                        <img src="img/arr.png" />
+                        <div>{{ (((newSum - sum)/sum)*100).toFixed(2) }}%</div>
                       </div>
                     </div>
                     <span>{{ newSum | currency:"":0 }}</span>                    
                   </div>
-                  <div class="diff-value">{{ newSum - sum | currency:"":0 }}</div>
-                  <img class="diff-mob" src="img/arr-mob.png" />
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
+			</div>
+			<div class="row">
+				<div class="ctn-foot back col-md-2">
+					<a href="#" onclick="window.location.reload(true);">
+						<img src="img/return.jpg" alt="">{{ 'footer_text1' | translate }}
+					</a>
+				</div>
+				<div class="ctn-foot text col-md-10">
+					<span class="desktop-only">{{ 'footer_text2' | translate }}</span>
+					<span class="d-inline-block">{{ 'footer_text3' | translate }}</span>
+				</div>
+			</div>
+		</div>
     <div class="container-fluid p-md-4 ctn-un h-100" ng-show="!isSupported" ng-cloak>
       <div class="ctn-un-inner">        
         <h1>Your browser is unsupported.</h1>
         <p>Please use a supported browser to view the visualizer.</p>
-        <img src="img/supported.jpg" />
+        <img src="img/supported.jpg" usemap="#image-map" />
+				<map name="image-map">
+					<area alt="Microsoft Edge" title="Microsoft Edge" href="https://www.microsoft.com/de-de/windows/microsoft-edge" coords="166,140,0,0" shape="rect">
+					<area alt="Google Chrome" title="Google Chrome" href="https://www.google.com/chrome/" coords="189,0,358,137" shape="rect">
+					<area alt="Apple Safari" title="Apple Safari" href="https://support.apple.com/downloads/safari" coords="558,140,395,0" shape="rect">
+					<area alt="Mozilla Firefox" title="Mozilla Firefox" href="https://www.mozilla.org" coords="588,0,739,140" shape="rect">
+				</map>
       </div>
     </div>
 
-    <ng-include ng-hide="true" src="'popover.html'"></ng-include>              
+    <ng-include ng-hide="true" src="popoverFile"></ng-include>              
     
     <div class="popup" 
       ng-class="{ 'active' : showPopup }"
@@ -142,11 +188,24 @@
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-body">
-            <p>Bitte klicken Sie auf <button class="btn btn-info btn-sm">Editieren aktivieren</button>
-            um die Datenpunkte im Graphen zu verschieben.</p>
-            <p>Wenn Sie fertig sind, klicken Sie auf <button class="btn btn-success btn-sm">Fertig</button> 
-            , um das Bearbeiten zu beenden.</p>
-            <p><h6><i>Notiz: Das Scrollen ist w&auml;hrend des Editierens deaktiviert.</i></h6></p>
+						<h2 class="text-center">{{ 'modal_title' | translate }}</h2>
+						<div class="row mt-3">
+							<div class="col-2 pr-0"><img src="img/1.png" alt=""></div>
+							<div class="col-10 pl-0">
+								{{ 'modal_ins1_1' | translate }}
+								<button class="btn btn-enable btn-sm">{{ 'btn_enable' | translate }}<img src="img/icon-enable.jpg" alt="" /></button>
+								{{ 'modal_ins1_2' | translate }}								
+							</div>
+						</div>
+						<div class="row mt-3">
+							<div class="col-2 pr-0"><img src="img/2.png" alt=""></div>
+							<div class="col-10 pl-0">
+								{{ 'modal_ins2_1' | translate }}
+								<button class="btn btn-done btn-sm">{{ 'btn_done' | translate }}<img src="img/icon-done.jpg" alt="" /></button>
+								{{ 'modal_ins2_2' | translate }}
+							</div>
+						</div>
+            <!-- <p><h6><i>Note: Scrolling is disabled while editing.</i></h6></p> -->
           </div>
         </div>
       </div>
@@ -155,7 +214,10 @@
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/pixi.min.js"></script>
-    <script src="js/angular.min.js"></script>
+    <script src="js/webfontloader.min.js"></script>
+		<script src="js/angular.min.js"></script>
+		<script src="js/angular-translate.min.js"></script>
+		<script src="js/angular-translate-loader-static-files.js"></script>
     <script src="js/angular-locale_de-de.js"></script>
     <script src="js/app.js"></script>
     <script src="js/services.js"></script>

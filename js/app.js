@@ -1,7 +1,21 @@
 var l = console.log.bind(window.console)
-, app = angular.module('app', [])
+	, app = angular.module('app', ['pascalprecht.translate'], function ($locationProvider) {
+		$locationProvider.html5Mode({
+			enabled: true,
+			requireBase: false
+		})
+	})
 
-app.controller('ctrl', function($scope, $rootScope, pixi){
+app.config(function ($translateProvider) {
+	$translateProvider.preferredLanguage('de')
+	$translateProvider.fallbackLanguage('en')
+	$translateProvider.useStaticFilesLoader({
+		prefix: 'data/', suffix: '.json'
+	})
+	$translateProvider.useSanitizeValueStrategy('sce')
+})
+
+app.controller('ctrl', function($scope, $location, $translate, pixi){
   var msie = window.document.documentMode
   , s = $scope
 
@@ -11,16 +25,11 @@ app.controller('ctrl', function($scope, $rootScope, pixi){
     return
   }
 
-  var BORDER_SIZE = 10  
-  , m_pos = 0
-  , currPanel
-  , currPanelIndex
-  , newWidth
-  , origWidth = null
-  // , url = 'data/data-points.json'
-  , url = 'data/data-points-new.json'
+  var currPanelIndex
+  , url
   , sum = 0
   , handle = null
+	, radii = [0, 20, 40, 60, 80, 100]
 
   s.isSupported = true
   s.showPopup = false
@@ -41,81 +50,81 @@ app.controller('ctrl', function($scope, $rootScope, pixi){
   } else{
     s.currDivider = s.dividers.d
   }
-  
-  pixi.get(url).then(function(res){
-    // l(res)
-    s.networkData = res.data
-    
-    s.networkDataSec = angular.copy(s.networkData)
-  
-    s.networkDataSec.forEach(function(obj){
-      obj.total = (obj.amount*100) / obj.value
-      sum+= obj.amount
-    })
-  
-    s.sum = parseFloat(sum.toFixed(2))
-    s.newSum = parseFloat(sum.toFixed(2)) 
-    
-    // PIXI Canvas
-    pixi.init()
-     
-    // Web
-    var radii = [ 0, 20, 40, 60, 80, 100 ]
-    , canvas = $(".canvas-ctn")
-    , w = canvas.width()
-    , h = canvas.height()
+	
+	WebFont.load({
+		custom: { families: ['bs-m'] },
+		active: function() {
+			setTimeout(function () {
+				radii.forEach(function (obj) {
+					// Percent Marks
+					pixi.drawPercent(obj)	
+				})
 
-    radii.forEach(function(obj){      
+				pixi.isMobile() && $("#exampleModal").modal("show")				
+				s.showLoader = false
+				s.$apply()
+			}, 500)
+		}
+	})
 
-      // Percent Marks
-      pixi.drawPercent(obj)
-      // var el = $('<div class="perc">')
-      // // el.html(obj + " %")
-      // // el.html(obj / 10 + ".0")
-      // el.html(obj / 10)
-      // if(pixi.isMobile()){
-      //   el.css({
-      //     transform: "translate(" + (w/2 - 50) + "px, " + (h/2 - 1.4*obj - 20) + "px)",
-      //     transformOrigin: "0%"      
-      //   })
-      // }else{
-      //   el.css({
-      //     transform: "translate(" + (w/2 - 50) + "px, " + (h/2 - 2*obj - 20) + "px)",
-      //     transformOrigin: "0%"      
-      //   })
-      // }
-      // canvas.append(el)
+	var lang = $location.search().lang
+	if (angular.isDefined(lang) && lang === "en"){
+		url = 'data/en/data-points.json'
+		s.popoverFile = 'data/en/popover.html'		
+	} else{
+		lang = 'de'
+		url = 'data/de/data-points.json'
+		s.popoverFile = 'data/de/popover.html'
+	}
+	$translate.use(lang)
+	
+	pixi.get(url).then(function(res){
+		// l(res)
+		s.networkData = res.data
+		
+		s.networkDataSec = angular.copy(s.networkData)
+	
+		s.networkDataSec.forEach(function(obj){
+			obj.total = (obj.amount*100) / obj.value
+			sum+= obj.amount
+		})
+	
+		s.sum = parseFloat(sum.toFixed(2))
+		s.newSum = parseFloat(sum.toFixed(2)) 
+		
+		// PIXI Canvas
+		pixi.init()
+			
+		// Web
+		radii.forEach(function(obj){ 			
 
-      // Main Polygon Rings
-      var p = pixi.getPoints(2*obj, s.networkData.length)
-      // pixi.drawPoints(p, 2)
-      pixi.drawPolygon(p)
-      if(obj === 100){
-        // Draw lines from center to end points
-        pixi.drawLinesFromCenter(p)      
-      }
-    })
+			// Main Polygon Rings
+			var p = pixi.getPoints(2*obj, s.networkData.length)
+			pixi.drawPolygon(p)
 
-    // Indicators
-    if(pixi.isMobile()){
-      var p = pixi.getPoints(100, s.networkData.length)
-    } else{
-      var p = pixi.getPoints(220, s.networkData.length)
-    }
-    // pixi.drawPoints(p, 2)
-    pixi.drawIndicators(p, s.networkData)
-    
-    // Draw original network polygon
-    var dp = pixi.getDataPoints(s.networkData)
-    pixi.drawPolygon(dp, null, null, 5, 0x00aac9)
-    pixi.drawPoints(dp, pixi.isMobile()?20:12, 0x00aac9)
+			if(obj === 100){
+				// Draw lines from center to end points, edge dots
+				pixi.drawLinesFromCenterAndEdgeDots(p)
+			}
+		})
 
-    // Draw second polygon to be dragged
-    pixi.drawDraggablePolygon(s.networkDataSec)
-    
-    s.showLoader = false
+		// Indicators
+		if(pixi.isMobile()){
+			var p = pixi.getPoints(100, s.networkData.length)
+		} else{
+			var p = pixi.getPoints(220, s.networkData.length)
+		}
+		pixi.drawIndicators(p, s.networkData, lang)
+		
+		// Draw original network polygon
+		var dp = pixi.getDataPoints(s.networkData)
+		pixi.drawPolygon(dp, null, null, 5, 0x73b657)
+		pixi.drawPoints(dp, pixi.isMobile() ? 12 : 10, 0x73b657)
 
-  })
+		// Draw second polygon to be dragged
+		pixi.drawDraggablePolygon(s.networkDataSec, pixi.isMobile() ? 12 : 10, 0x166c9d)
+		
+	})
 
   // New Sum
   s.$watch('networkDataSec', function(n, o){
@@ -131,10 +140,6 @@ app.controller('ctrl', function($scope, $rootScope, pixi){
       var curr = s.networkDataSec[v.index]
       curr.amount = parseFloat((curr.total*v.percent).toFixed(2))
     })
-  })
-
-  s.$on('$viewContentLoaded', function(){
-    //s.showLoader = false
   })
   
   s.$on('$includeContentLoaded', function(){
@@ -166,7 +171,6 @@ app.controller('ctrl', function($scope, $rootScope, pixi){
       //   s.showPopup = false
       //   s.$apply()     
       // })
-
     })
   })
 
@@ -295,16 +299,12 @@ app.controller('ctrl', function($scope, $rootScope, pixi){
         }
       }
     })
-
-    if(pixi.isMobile()){
-      $("#exampleModal").modal("show")
-    }
   }
 
   $(function() {
     setTimeout(function(){
       barsFunction()
-    }, 1000)
+		}, 1000)
   })
   
 })

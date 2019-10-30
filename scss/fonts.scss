@@ -1,0 +1,17 @@
+$bs-r: 'bs-r';
+@font-face {
+  font-family: $bs-r;
+  src: url("../fonts/Brix Sans W01 Regular.ttf") format('truetype');
+}
+
+$bs-m: 'bs-m';
+@font-face {
+  font-family: $bs-m;
+  src: url("../fonts/Brix Sans W01 Medium.ttf") format('truetype');
+}
+
+$bs-b: 'bs-b';
+@font-face {
+  font-family: $bs-b;
+  src: url("../fonts/Brix Sans W01 Bold.ttf") format('truetype');
+}

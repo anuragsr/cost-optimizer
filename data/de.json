@@ -1,0 +1,21 @@
+{
+	"nav_title": "Dynamischer Produktkostenkonfigurator",
+	"page_title": "Der interaktive dynamische Produktkostenkonfigurator",
+	"heading1": "Eigenschaften im Ist-und Zielzustand",
+	"sub_heading1": "Adressieren Sie Ihre Produktkosten Eigenschaft für Eigenschaft",
+	"heading2": "Materialkosten im Ist-und Zielzustand",	
+	"sub_heading2": "Finden Sie hier die Produktkosten und Einsparpotentiale Eigenschaft für Eigenschaft",
+	"btn_enable": "Editieren aktivieren",
+	"btn_done": "Fertig",
+	"legend_orig": "Istzustand",
+	"legend_targ": "Zielzustand",
+	"total": "Gesamtsumme",
+	"footer_text1": "ZURÜCK ZU ARTIKEL",
+	"footer_text2": "Die geringstmögliche Eigenschaftsausprägung entspricht der Eigenschaft des Minimum Viable Product (MVP).",
+	"footer_text3": "1) [EUR / Einheit]",
+	"modal_title": "Wie aktiviere ich die Charts?",
+	"modal_ins1_1": "Um die Bearbeitung zu aktivieren, klicken Sie bitte auf ",
+	"modal_ins1_2": "taste, um Punkte auf der Radarkarte zu verschieben.",
+	"modal_ins2_1": "Wenn Sie fertig sind, klicken Sie auf",
+	"modal_ins2_2": "taste zum Beenden."
+}

@@ -17,7 +17,8 @@
   },
   {
     "id": "t3",
-    "key": "Benutzer-freundlichkeit",
+    "key": "Benutzer-<br/>freundlichkeit",
+    "pop_key": "Benutzerfreundlichkeit",
     "value": 85,
     "amount": 750,
     "dx": 0,
@@ -49,7 +50,8 @@
   },
   {
     "id": "t7",
-    "key": "Qualität und Zuverlässigkeit",
+    "key": "Qualität und<br/> Zuverlässigkeit",
+    "pop_key": "Qualität und Zuverlässigkeit",
     "value": 85,
     "amount": 2300,
     "dx": -200,
@@ -57,7 +59,8 @@
   },
   {
     "id": "t8",
-    "key": "Total cost of ownership",
+    "key": "Total cost of <br/>ownership",
+    "pop_key": "Total cost of ownership",
     "value": 70,
     "amount": 950,
     "dx": -200,

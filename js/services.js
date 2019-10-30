@@ -1,20 +1,3 @@
-// class Dot extends PIXI.Graphics {
-//   constructor(r, f, c) {
-//     super()
-//     this.r = r || 1
-//     this.f = f || .1
-//     this.c = c || 0x000000
-//     this.draw()
-//   }  
-
-//   draw() {
-//     this
-//     .beginFill(this.c, this.f)
-//     .drawCircle(this.x, this.y, this.r)
-//     .endFill()
-//   }
-// }
-
 function _instanceof(left, right) { if (right != null && typeof Symbol !== "undefined" && right[Symbol.hasInstance]) { return !!right[Symbol.hasInstance](left); } else { return left instanceof right; } }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -34,6 +17,36 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var Dot =
+/*#__PURE__*/
+function (_PIXI$Graphics) {
+	_inherits(Dot, _PIXI$Graphics);
+
+	function Dot(r, f, c) {
+		var _this;
+
+		_classCallCheck(this, Dot);
+
+		_this = _possibleConstructorReturn(this, _getPrototypeOf(Dot).call(this));
+		_this.r = r || 1;
+		_this.f = f || .1;
+		_this.c = c || 0x000000;
+
+		_this.draw();
+
+		return _this;
+	}
+
+	_createClass(Dot, [{
+		key: "draw",
+		value: function draw() {
+			this.beginFill(this.c, this.f).drawCircle(this.x, this.y, this.r).endFill();
+		}
+	}]);
+
+	return Dot;
+}(PIXI.Graphics);
 
 var Square =
 /*#__PURE__*/
@@ -142,13 +155,16 @@ function (_PIXI$Graphics3) {
 
 app.factory('pixi', function($q, $filter, $rootScope, $http, $q) {
   var canvas = $(".canvas-ctn")
+	, w = canvas.width()
+	, h = canvas.height()
+	, c = { x: w / 2, y: h / 2 }
   , app
   , ctn = new PIXI.DisplayObjectContainer()  
   , ctnCopy = new PIXI.DisplayObjectContainer()  
   , lineArr = []
   , sqArr = []
   , polyCopy
-  , currLine
+	, currLine
 
   return {
     isMobile: function(){
@@ -309,26 +325,21 @@ app.factory('pixi', function($q, $filter, $rootScope, $http, $q) {
     },
     drawPoints: function(points, side, color){
       points.forEach(function(obj){
-        var dot = new Square(side, color)
+        // var dot = new Square(side, color)
+        // dot.position.x = obj.x
+        // dot.position.y = obj.y
+        // dot.rotation = Math.PI/4
+        // ctn.addChild(dot)
+				
+				var dot = new Dot(side, 1, 0x73b657)
         dot.position.x = obj.x
-        dot.position.y = obj.y
-        dot.rotation = Math.PI/4
+        dot.position.y = obj.y				
         ctn.addChild(dot)
       })
     },
     drawPolygon: function(points, f, fc, l, lc, isSquare){
       var polyGonArr = []
       , poly
-
-      // if(isSquare){
-      //   points.forEach(function(obj){
-      //     polyGonArr.push(obj.x + obj.s/2, obj.y + obj.s/2)
-      //   })
-      //   polyGonArr.push(points[0].x + points[0].s/2, points[0].y + points[0].s/2)
-      //   poly = new Polygon(polyGonArr, f, fc, l, lc)
-      //   ctnCopy.addChild(poly)
-      // }else{
-      // }
 
       points.forEach(function(obj){
         polyGonArr.push(obj.x, obj.y)
@@ -342,10 +353,11 @@ app.factory('pixi', function($q, $filter, $rootScope, $http, $q) {
     drawDraggablePoints: function(points, side, color){
       var self = this      
       points.forEach(function(obj, idx){
-        var sq = new Square(side, color)
+        // var sq = new Square(side, color)
+				var sq = new Dot(side, 1, 0x166c9d)
         sq.position.x = obj.x
         sq.position.y = obj.y
-        sq.rotation = Math.PI/4
+        // sq.rotation = Math.PI/4
         sq.id = "nt" + (idx + 1)
         sq.idx = idx + 1
         sqArr.push(sq)
@@ -402,9 +414,7 @@ app.factory('pixi', function($q, $filter, $rootScope, $http, $q) {
           if (this.dragging){
             var newPos = this.data.getLocalPosition(this.parent)
             , point = self.getClosestPointOnLine(currLine, newPos.x, newPos.y)
-
-            // this.position.x = point.x - this.s/2
-            // this.position.y = point.y - this.s/2
+            
             this.position.x = point.x
             this.position.y = point.y
 
@@ -438,8 +448,8 @@ app.factory('pixi', function($q, $filter, $rootScope, $http, $q) {
 
       this.redrawPolygon()
     },
-    drawDraggablePolygon: function(data){
-      this.drawDraggablePoints(this.getDataPoints(data), this.isMobile()?20:12, 0x156c9c)
+    drawDraggablePolygon: function(data, side, color){
+			this.drawDraggablePoints(this.getDataPoints(data), side, color)
       
       // Dynamically draw secondary polygon
       this.redrawPolygon()
@@ -448,7 +458,7 @@ app.factory('pixi', function($q, $filter, $rootScope, $http, $q) {
         ctnCopy.addChild(sq)        
       })
     },
-    drawLinesFromCenter: function(points){
+    drawLinesFromCenterAndEdgeDots: function(points){
       points.forEach(function(obj, idx){
         var line = new Line([
           c.x, c.y,
@@ -456,24 +466,28 @@ app.factory('pixi', function($q, $filter, $rootScope, $http, $q) {
         ], null, 0x000000, 1)
         line.id = "nt" + (idx + 1)
         lineArr.push(line)
-        ctn.addChild(line)
+				ctn.addChild(line)
+				
+				var dot = new Dot(5, 1, null)
+				dot.position.set(obj.x, obj.y)
+				ctn.addChild(dot)
       })
-    },
+		},
     drawPercent: function(obj){
       var style = new PIXI.TextStyle({
-          align: "right",
-          fontFamily: "Arial Narrow, Arial",
-          fontSize: 18,
-          fontWeight: "bold"
-      });
-      var text = new PIXI.Text(obj / 10, style);
+				fontFamily: "bs-m",
+				fontSize: 18,
+				fontWeight: "bold"
+      })
+      var text = new PIXI.Text(obj / 10, style)
       text.alpha = .9
       text.position.x = c.x - 20
-      text.position.y = c.y - 2*obj - 15
+      text.position.y = c.y - 2*obj - 20
 
       ctnCopy.addChild(text)
     },
-    drawIndicators: function(points, data){
+    drawIndicators: function(points, data, lang){
+			l(lang)
       var self = this
       points.forEach(function(p, idx){
         // Indicator Name Boxes
@@ -481,50 +495,71 @@ app.factory('pixi', function($q, $filter, $rootScope, $http, $q) {
         canvas.append(el)
         
         // el.html((idx+1) + ". " + data[idx].key)
-        el.html("<div class'ind-text'>" + data[idx].key + "</div><img class='icon icon-light' src='img/info.svg' />")
-        el.attr({
+        el.html("<div class='ind-text'>" + data[idx].key + "</div><img class='icon' src='img/icon-info.jpg' />")
+				
+				var title = data[idx].pop_key ? data[idx].pop_key : data[idx].key
+				el.attr({
           "data-id": "nt" + (idx+1),
           "data-toggle": "popover",
-          title: data[idx].key.replace(/-/g, ''),
+					// title: title.replace(/-/g, ''),
           class: "ind",
           tabindex: 0
-        })
-
-        // if(self.isMobile()){
-        //   el.css({
-        //     bottom: -30,
-        //     top: "unset",
-        //     left: "50%",            
-        //     transform: "translateX(-50%)",
-        //     visibility: "hidden"
-        //   })
-        // }else{
+				})
+				
         if(self.isMobile()){
           var ty = "calc("+ p.y +"px - 50%)"
           var tx = p.x +"px"
-          
-          if(idx === 0){
-            tx = "calc("+ p.x +"px - 50%)"
-            ty = "calc("+ p.y +"px - 200%)"
-          } else if(idx === 1 || idx === 2){
-            tx = "calc("+ p.x +"px + 20%)"
-            ty = "calc("+ p.y +"px - 150%)"
-          } else if(idx === 3){
-            tx = "calc("+ p.x +"px + 25%)"
-            ty = "calc("+ p.y +"px + 50%)"
-          } else if(idx === 4){
-            tx = "calc("+ p.x +"px - 50%)"
-            ty = "calc("+ p.y +"px + 100%)"
-          } else if(idx === 5){
-            tx = "calc("+ p.x +"px - 125%)"
-            ty = "calc("+ p.y +"px + 50%)"
-          } else if(idx === 6){
-            tx = "calc("+ p.x +"px - 115%)"
-            ty = "calc("+ p.y +"px + 50%)"
-          } else if(idx === 7){
-            tx = "calc("+ p.x +"px - 125%)"
-            ty = "calc("+ p.y +"px - 125%)"
-          }
+          switch(idx){
+						case 0:
+							tx = "calc(" + p.x + "px - 50%)"
+							ty = "calc(" + p.y + "px - 250%)"
+							break;
+
+						case 1:
+							tx = "calc(" + p.x + "px + 25%)"
+							ty = "calc(" + p.y + "px - 200%)"
+							break;
+
+						case 2:
+							if(lang === "en"){
+								tx = "calc(" + p.x + "px + 35%)"
+								ty = "calc(" + p.y + "px - 130%)"
+							} else {
+								tx = "calc(" + p.x + "px + 10%)"
+								ty = "calc(" + p.y + "px - 160%)"
+							}
+							break;
+
+						case 3:
+							tx = "calc(" + p.x + "px + 35%)"
+							ty = "calc(" + p.y + "px + 50%)"
+							break;
+
+						case 4:
+							tx = "calc(" + p.x + "px - 50%)"
+							ty = "calc(" + p.y + "px + 125%)"
+							break;
+
+						case 5:
+							tx = "calc(" + p.x + "px - 150%)"
+							ty = "calc(" + p.y + "px + 50%)"
+							break;
+
+						case 6:
+							if (lang === "en") {
+								tx = "calc(" + p.x + "px - 150%)"
+								ty = "calc(" + p.y + "px - 100%)"
+							} else {
+								tx = "calc(" + p.x + "px - 100%)"
+								ty = "calc(" + p.y + "px - 125%)"
+							}
+							break;
+
+						case 7:
+							tx = "calc(" + p.x + "px - 125%)"
+							ty = "calc(" + p.y + "px - 125%)"
+							break;
+					}
         }else{          
           var ty = "calc("+ p.y +"px - 50%)"
           var tx = p.x +"px"
@@ -541,13 +576,10 @@ app.factory('pixi', function($q, $filter, $rootScope, $http, $q) {
           }
         }
 
-          el.css({
-            // transform: "translate(" + (p.x + data[idx].dx) + "px, " + (p.y + data[idx].dy) + "px)",
-            // transform: "translate(" + (p.x) + "px, " + (p.y) + "px)",
-            transform: "translate("+ tx + ", " + ty +")",
-            transformOrigin: "0%"
-          })
-        // }
+				el.css({
+					transform: "translate("+ tx + ", " + ty +")",
+					transformOrigin: "0%"
+				})
       })
     },
     redrawPolygon: function(){
