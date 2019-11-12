@@ -7,9 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/style.css" />
-	<meta name="apple-mobile-web-app-capable" content="yes" />
-	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
-	<link rel="apple-touch-icon-precomposed" href="img/CostOptimizerAppLogo-152.png">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+		<link rel="apple-touch-icon-precomposed" href="img/CostOptimizerAppLogo-152.png">
     <link rel="apple-touch-icon" href="img/CostOptimizerAppLogo-152.png">
   </head>
   <body 
@@ -25,13 +25,18 @@
     </div>
 
     <nav class="navbar navbar-dark">
-      <a class="navbar-brand mr-0" href="#" onclick="window.location.reload(true);">
-        <img src="img/logo1.png" height="30" />&nbsp;&nbsp;{{ 'nav_title' | translate }}
+			<a class="navbar-brand mr-0" href="#" onclick="window.location.reload(true);">
+				<div class="mobile-only">
+					<img src="img/logo1.png" />&nbsp;&nbsp;{{ 'nav_title' | translate }}
+				</div>
+				<div class="desktop-only">
+					<img src="img/logo1.png" />
+					<div class="page-title text-center">{{ 'page_title' | translate }}</div>
+				</div>
       </a>
     </nav>
 
     <div class="container-fluid" ng-show="isSupported" ng-cloak>
-			<div class="page-title text-center">{{ 'page_title' | translate }}</div>			
 			<div class="row">
         <div class="col-xl-6 px-md-2 p-1">
 					<div class="ctn-caret text-center"><img src="img/caret-down.png" alt=""></div>
@@ -56,7 +61,7 @@
 					</div>    
 					<div class="row mobile-only">
 						<div class="ctn-foot back col-md-2">
-							<a href="#" onclick="window.location.reload(true);">
+							<a href="{{ 'footer_link' | translate }}" onclick="window.location.reload(true);">
 								<img src="img/return.jpg" alt="">{{ 'footer_text1' | translate }}
 							</a>
 						</div>
@@ -139,7 +144,7 @@
 			</div>
 			<div class="row">
 				<div class="ctn-foot back col-md-2">
-					<a href="#" onclick="window.location.reload(true);">
+					<a href="{{ 'footer_link' | translate }}" onclick="window.location.reload(true);">
 						<img src="img/return.jpg" alt="">{{ 'footer_text1' | translate }}
 					</a>
 				</div>
