@@ -630,5 +630,8 @@ hr.border-dark {
 .popover.bs-popover-bottom .arrow::before, .popover.bs-popover-bottom .arrow::after {
   border-bottom-color: #dee0e3;
 }
+.popover.bs-popover-top .arrow::before, .popover.bs-popover-top .arrow::after {
+  border-top-color: #dee0e3;
+}
 
 /*# sourceMappingURL=style.css.map */

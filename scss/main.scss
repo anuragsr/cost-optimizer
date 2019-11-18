@@ -553,5 +553,10 @@ hr.border-dark{
 		.arrow::before, .arrow::after{
 			border-bottom-color: $pop-bg;
 		}
+	}
+	&.bs-popover-top{
+		.arrow::before, .arrow::after{
+			border-top-color: $pop-bg;
+		}
 	} 
 }

@@ -15,7 +15,7 @@ app.config(function ($translateProvider) {
 	$translateProvider.useSanitizeValueStrategy('sce')
 })
 
-app.controller('ctrl', function($scope, $location, $translate, pixi){
+app.controller('ctrl', function($scope, $location, $translate, $timeout, pixi){
   var msie = window.document.documentMode
   , s = $scope
 
@@ -59,10 +59,6 @@ app.controller('ctrl', function($scope, $location, $translate, pixi){
 					// Percent Marks
 					pixi.drawPercent(obj)	
 				})
-
-				pixi.isMobile() && $("#exampleModal").modal("show")				
-				s.showLoader = false
-				s.$apply()
 			}, 500)
 		}
 	})
@@ -70,11 +66,11 @@ app.controller('ctrl', function($scope, $location, $translate, pixi){
 	var lang = $location.search().lang
 	if (angular.isDefined(lang) && lang === "en"){
 		url = 'data/en/data-points.json'
-		s.popoverFile = 'data/en/popover.html'		
+		// s.popoverFile = 'data/en/popover.html'
 	} else{
 		lang = 'de'
 		url = 'data/de/data-points.json'
-		s.popoverFile = 'data/de/popover.html'
+		// s.popoverFile = 'data/de/popover.html'
 	}
 	$translate.use(lang)
 	
@@ -96,7 +92,7 @@ app.controller('ctrl', function($scope, $location, $translate, pixi){
 		pixi.init()
 			
 		// Web
-		radii.forEach(function(obj){ 			
+		radii.forEach(function(obj){ 
 
 			// Main Polygon Rings
 			var p = pixi.getPoints(2*obj, s.networkData.length)
@@ -114,8 +110,11 @@ app.controller('ctrl', function($scope, $location, $translate, pixi){
 		} else{
 			var p = pixi.getPoints(220, s.networkData.length)
 		}
-		pixi.drawIndicators(p, s.networkData, lang)
-		
+    pixi.drawIndicators(p, s.networkData, lang)
+    l("ind drawn")
+    if(lang === 'en') s.popoverFile = 'data/en/popover.html'
+    else s.popoverFile = 'data/de/popover.html'
+    
 		// Draw original network polygon
 		var dp = pixi.getDataPoints(s.networkData)
 		pixi.drawPolygon(dp, null, null, 5, 0x73b657)
@@ -143,35 +142,27 @@ app.controller('ctrl', function($scope, $location, $translate, pixi){
   })
   
   s.$on('$includeContentLoaded', function(){
-    // Popovers
-    $('[data-toggle="popover"]').each(function(){
-      var popCtn = $('#' + $(this).data('id'))
-      , content = popCtn.find(".ctn-click").length ? popCtn.find(".ctn-click").html() : popCtn.html()
-
-      $(this)
-      .popover({
-        trigger: 'focus',
-        container: 'body',
-        placement: 'bottom',
-        html: true,
-        content: content
+    $timeout(function(){
+      l("content loaded")
+      // l($('[data-toggle="popover"]').length)
+      // Popovers
+      $('[data-toggle="popover"]').each(function(){
+        var popCtn = $('#' + $(this).data('id'))
+        , content = popCtn.find(".ctn-click").length ? popCtn.find(".ctn-click").html() : popCtn.html()
+  
+        $(this).popover({
+          trigger: 'focus',
+          container: 'body',
+          placement: 'bottom',
+          html: true,
+          content: content
+        })
       })
-      // .on('shown.bs.popover', function (e) {
-      //   var el = $(e.currentTarget)
-      //   if(el.hasClass("bar-line")){ // Left popup
-      //     s.popupPos = "left"
-      //   } else{
-      //     s.popupPos = "right"
-      //   }
-      //   s.popupContent = $("#" + el.data("id")).find(".ctn-drag").html()
-      //   s.showPopup = true
-      //   s.$apply()
-      // })
-      // .on('hide.bs.popover', function (e) {
-      //   s.showPopup = false
-      //   s.$apply()     
-      // })
-    })
+    
+      pixi.isMobile() && $("#exampleModal").modal("show")				
+      s.showLoader = false
+      // s.$apply()
+    }, 500)
   })
 
   window.onresize = function(){
